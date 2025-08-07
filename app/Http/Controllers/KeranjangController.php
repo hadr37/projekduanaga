@@ -61,7 +61,7 @@ class KeranjangController extends Controller
     // Simulasi penyimpanan atau proses pembayaran...
 
     // Setelah selesai, kosongkan keranjang
-    Keranjang::truncate(); // Atau hanya milik user tertentu jika ada autentikasi
+    //Keranjang::truncate(); // Atau hanya milik user tertentu jika ada autentikasi
 
     return redirect()->route('keranjang.index')->with('success', 'Checkout berhasil!');
     }
