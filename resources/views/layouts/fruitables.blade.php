@@ -92,10 +92,31 @@
                             <a href="#" class="position-relative me-4 my-auto">
                                 <i class="fa fa-shopping-bag fa-2x"></i>
                                 <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
-                            </a>
-                            <a href="#" class="my-auto">
-                                <i class="fas fa-user fa-2x"></i>
-                            </a>
+                            <div class="dropdown my-auto">
+    <a class="btn btn-light dropdown-toggle d-flex align-items-center" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fas fa-user fa-2x me-2"></i>
+        @if(Auth::check())
+            {{ Auth::user()->name }}
+        @else
+            Akun
+        @endif
+    </a>
+
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+        @if(Auth::check())
+            <li>
+                <form action="{{ route('logout') }}" method="POST" class="px-3 py-1">
+                    @csrf
+                    <button type="submit" class="btn btn-danger w-100">Logout</button>
+                </form>
+            </li>
+        @else
+            <li><a class="dropdown-item" href="{{ route('login') }}">Login</a></li>
+            <li><a class="dropdown-item" href="{{ route('register') }}">Register</a></li>
+        @endif
+    </ul>
+</div>
+
                         </div>
                     </div>
                 </nav>
