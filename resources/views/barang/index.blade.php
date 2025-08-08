@@ -17,11 +17,12 @@
             <label for="kategori" class="form-label">Filter Kategori</label>
             <select name="kategori" id="kategori" class="form-select">
                 <option value="">-- Semua Kategori --</option>
-                @foreach ($kategoriList as $kategori)
-                    <option value="{{ $kategori }}" {{ request('kategori') == $kategori ? 'selected' : '' }}>
-                        {{ $kategori }}
-                    </option>
-                @endforeach
+                @foreach ($kategoris as $kategori)
+    <option value="{{ $kategori->nama_kategori }}" {{ request('kategori') == $kategori->nama_kategori ? 'selected' : '' }}>
+        {{ $kategori->nama_kategori }}
+    </option>
+@endforeach
+
             </select>
         </div>
         <div class="col-md-4 d-flex gap-2">

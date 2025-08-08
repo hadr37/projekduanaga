@@ -3,6 +3,7 @@
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KeranjangController;
+use App\Http\Controllers\KategoriController;
 use Illuminate\Support\Facades\Route;
 
 // Home
@@ -41,4 +42,9 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user/dashboard', function () {
         return view('layouts.fruitables'); // halaman user
     })->name('user.katalog');
+});
+
+Route::resource('kategori', KategoriController::class);
+Route::prefix('admin')->name('admin.')->group(function() {
+    Route::resource('users', App\Http\Controllers\Admin\UserController::class);
 });

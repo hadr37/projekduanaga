@@ -9,61 +9,63 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    public function showLogin() {
+    // Tampilkan form login
+    public function showLogin()
+    {
         return view('auth.login');
     }
 
-    public function showRegister() {
+    // Tampilkan form register
+    public function showRegister()
+    {
         return view('auth.register');
     }
 
-public function register(Request $request)
-{
-    $request->validate([
-        'name' => 'required',
-        'email' => 'required|email|unique:users',
-        'password' => 'required|confirmed|min:6',
-        'role' => 'required|in:admin,user'
-    ]);
+    // Proses registrasi user baru
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|confirmed|min:6',
+            // 'role' tidak perlu divalidasi karena kita set default 'user'
+        ]);
 
-    User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-        'role' => $request->role, // simpan role dari form
-    ]);
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'user', // default role khusus user
+        ]);
 
-    return redirect()->route('login')->with('success', 'Pendaftaran berhasil. Silakan login.');
-}
-
-
-
-public function login(Request $request)
-{
-    $credentials = $request->only('email', 'password');
-
-    if (Auth::attempt($credentials)) {
-        $user = Auth::user();
-    
-        // Cek role setelah login berhasil
-        if ($user->role === 'admin') {
-            return redirect()->route('admin.dashboard');
-        } elseif ($user->role === 'user') {
-            
-            return redirect()->route('katalog');
-
-        } else {
-            Auth::logout(); // keluar jika role tidak dikenali
-            return back()->with('error', 'Role tidak dikenali');
-        }
+        return redirect()->route('login')->with('success', 'Pendaftaran berhasil. Silakan login.');
     }
 
-    return back()->with('error', 'Email atau password salah');
-}
+    // Proses login user
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
 
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
 
+            // Redirect berdasarkan role
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard');
+            } elseif ($user->role === 'user') {
+                return redirect()->route('katalog');
+            } else {
+                Auth::logout();
+                return back()->with('error', 'Role tidak dikenali.');
+            }
+        }
 
-    public function logout() {
+        return back()->with('error', 'Email atau password salah.');
+    }
+
+    // Logout
+    public function logout()
+    {
         Auth::logout();
         return redirect()->route('login');
     }

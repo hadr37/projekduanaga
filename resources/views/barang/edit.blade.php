@@ -177,19 +177,17 @@
         </div>
 
         <div class="form-group">
-            <label>Kategori</label>
-            <select name="kategori" required>
-                <option value="">-- Pilih Kategori --</option>
-                @php
-                    $kategoriList = ['Facial Wash', 'Body Wash', 'Cream', 'Toner', 'Masker Wajah', 'Deodorant', 'Serum'];
-                @endphp
-                @foreach ($kategoriList as $kategori)
-                    <option value="{{ $kategori }}" {{ $barang->kategori === $kategori ? 'selected' : '' }}>
-                        {{ $kategori }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+    <label>Kategori</label>
+    <select name="kategori_id" required>
+        <option value="">-- Pilih Kategori --</option>
+        @foreach($kategoris as $kategori)
+            <option value="{{ $kategori->id }}" {{ old('kategori_id', $barang->kategori_id ?? '') == $kategori->id ? 'selected' : '' }}>
+                {{ $kategori->nama_kategori }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
 
         <div class="form-group">
             <label>Deskripsi</label>

@@ -24,8 +24,7 @@
         }
         input[type="text"],
         input[type="email"],
-        input[type="password"],
-        select {
+        input[type="password"] {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
@@ -91,17 +90,12 @@
 
             <div class="password-wrapper">
                 <input type="password" id="password" name="password" placeholder="Password" required>
-                <span onclick="togglePassword()">👁️</span>
+                <span onclick="togglePassword('password', this)">👁️</span>
             </div>
             <div class="password-wrapper">
-                <input type="password" id="password" name="password_confirmation" placeholder="Password Konfirmasi" required>
-                <span onclick="togglePassword()">👁️</span>
+                <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Password Konfirmasi" required>
+                <span onclick="togglePassword('password_confirmation', this)">👁️</span>
             </div>
-            <select name="role" required>
-                <option value="" disabled selected>Pilih peran</option>
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-            </select>
 
             <button type="submit">Daftar</button>
         </form>
@@ -112,9 +106,8 @@
     </div>
 
     <script>
-        function togglePassword() {
-            const input = document.getElementById("password");
-            const icon = event.target;
+        function togglePassword(id, icon) {
+            const input = document.getElementById(id);
             if (input.type === "password") {
                 input.type = "text";
                 icon.textContent = "🙈";

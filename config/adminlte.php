@@ -327,6 +327,17 @@ return [
         'icon' => 'fas fa-fw fa-users',
     ],
     [
+    'text' => 'Kategori',
+    'url'  => 'kategori',
+    'icon' => 'fas fa-fw fa-list',
+    ],
+  [
+    'text' => 'Dashboard admin',
+    'url'  => '/barang',
+    'icon' => 'fas fa-fw fa-list',
+],
+
+    [
         'type' => 'sidebar-menu-search',
         'text' => 'search',
     ],
@@ -352,22 +363,6 @@ return [
         'text' => 'change_password',
         'url' => 'admin/settings',
         'icon' => 'fas fa-fw fa-lock',
-    ],
-    ['header' => 'labels'],
-    [
-        'text' => 'important',
-        'icon_color' => 'red',
-        'url' => '#',
-    ],
-    [
-        'text' => 'warning',
-        'icon_color' => 'yellow',
-        'url' => '#',
-    ],
-    [
-        'text' => 'information',
-        'icon_color' => 'cyan',
-        'url' => '#',
     ],
 ],
 
