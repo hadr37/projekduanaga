@@ -22,6 +22,8 @@ return new class extends Migration
         $table->integer('harga');
         $table->integer('stok');
         $table->string('gambar')->nullable(); // Untuk gambar
+        $table->unsignedBigInteger('kategori_id');
+        $table->foreign('kategori_id')->references('id')->on('kategoris');
         $table->timestamps();
     });
 }
