@@ -1,4 +1,5 @@
 @extends('adminlte::page')
+
 @section('title', 'Data Barang')
 
 @section('content_header')
@@ -9,22 +10,27 @@
 
     {{-- 🔍 Form Search & Filter --}}
     <form method="GET" class="row mb-4 g-2 align-items-end">
+        {{-- Search --}}
         <div class="col-md-4">
             <label for="search" class="form-label">Cari Nama Barang</label>
-            <input type="text" name="search" id="search" value="{{ request('search') }}" class="form-control" placeholder="Contoh: Facial Wash">
+            <input type="text" name="search" id="search" value="{{ request('search') }}"
+                   class="form-control" placeholder="Contoh: Facial Wash">
         </div>
+
+        {{-- Filter Kategori --}}
         <div class="col-md-4">
-            <label for="kategori" class="form-label">Filter Kategori</label>
-            <select name="kategori" id="kategori" class="form-select">
+            <label for="kategori_id" class="form-label">Filter Kategori</label>
+            <select name="kategori_id" id="kategori_id" class="form-select">
                 <option value="">-- Semua Kategori --</option>
                 @foreach ($kategoris as $kategori)
-    <option value="{{ $kategori->nama_kategori }}" {{ request('kategori') == $kategori->nama_kategori ? 'selected' : '' }}>
-        {{ $kategori->nama_kategori }}
-    </option>
-@endforeach
-
+                    <option value="{{ $kategori->id }}" {{ request('kategori_id') == $kategori->id ? 'selected' : '' }}>
+                        {{ $kategori->nama_kategori }}
+                    </option>
+                @endforeach
             </select>
         </div>
+
+        {{-- Tombol --}}
         <div class="col-md-4 d-flex gap-2">
             <button type="submit" class="btn btn-primary">🔎 Cari</button>
             <a href="{{ route('barang.index') }}" class="btn btn-secondary">🔄 Reset</a>
@@ -66,7 +72,7 @@
                 <tr>
                     <td>{{ $barang->kode_barang }}</td>
                     <td>{{ $barang->nama_barang }}</td>
-                    <td>{{ $barang->kategori }}</td>
+                    <td>{{ $barang->kategori->nama_kategori ?? '-' }}</td>
                     <td>{{ $barang->deskripsi }}</td>
                     <td>Rp {{ number_format($barang->harga, 0, ',', '.') }}</td>
                     <td>{{ $barang->stok }}</td>

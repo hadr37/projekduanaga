@@ -7,16 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Google Web Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet"> 
 
-        <!-- Icon Font Stylesheet -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
-    
+
     <style>
         body { padding-top: 90px; }
         .katalog-container {
@@ -42,9 +43,7 @@
             object-fit: contain;
             background-color: #f9f9f9;
         }
-        .katalog-body {
-            padding: 10px;
-        }
+        .katalog-body { padding: 10px; }
         .katalog-title {
             font-size: 14px;
             font-weight: 600;
@@ -75,6 +74,7 @@
             background: white;
             border-radius: 20px;
             transition: 0.2s;
+            cursor: pointer;
         }
         .btn-cart:hover {
             background: #198754;
@@ -100,66 +100,79 @@
 </head>
 <body>
 
-@include('layouts.navbar')
+    @include('layouts.navbar')
 
-<div class="container mt-5 pt-3">
-
-    {{-- FILTER, SORTING, SEARCH --}}
-    <form method="GET" action="{{ route('katalog.shop') }}#katalog" class="row g-2 mb-4">
-        <div class="col-md-3">
-            <select name="kategori" class="form-select" onchange="this.form.submit()">
-                <option value="">Semua Kategori</option>
-                @foreach ($barangs->pluck('kategori')->unique() as $kat)
-                    <option value="{{ $kat }}" {{ request('kategori') == $kat ? 'selected' : '' }}>{{ $kat }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-md-3">
-            <select name="sort" class="form-select" onchange="this.form.submit()">
-                <option value="">Urutkan</option>
-                <option value="harga_asc" {{ request('sort') == 'harga_asc' ? 'selected' : '' }}>Harga Termurah</option>
-                <option value="harga_desc" {{ request('sort') == 'harga_desc' ? 'selected' : '' }}>Harga Termahal</option>
-                <option value="stok_asc" {{ request('sort') == 'stok_asc' ? 'selected' : '' }}>Stok Terendah</option>
-                <option value="stok_desc" {{ request('sort') == 'stok_desc' ? 'selected' : '' }}>Stok Terbanyak</option>
-            </select>
-        </div>
-        <div class="col-md-4">
-            <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Cari produk...">
-        </div>
-        <div class="col-md-2 d-grid">
-            <button type="submit" class="btn btn-success">Terapkan</button>
-        </div>
-        <a href="{{ route('katalog.shop') }}#katalog" class="btn btn-outline-danger" title="Reset Filter">
-            <i class="fas fa-sync-alt"></i>
-        </a>
-    </form>
-
-    {{-- KATALOG --}}
-    <div id="katalog" class="katalog-container">
-        @forelse ($barangs as $barang)
-            <div class="katalog-card position-relative">
-                <div class="badge">{{ $barang->kategori }}</div>
-                <img src="{{ $barang->gambar ? asset('storage/' . $barang->gambar) : 'https://via.placeholder.com/300x180?text=No+Image' }}" alt="{{ $barang->nama_barang }}">
-                <div class="katalog-body">
-                    <div class="katalog-title">{{ $barang->nama_barang }}</div>
-                    <div class="katalog-desc">{{ $barang->deskripsi }}</div>
-                    <div class="text-muted mt-1" style="font-size:12px;">Stok: {{ $barang->stok }}</div>
-                </div>
-                <div class="katalog-footer">
-                    <div class="harga">Rp {{ number_format($barang->harga, 0, ',', '.') }}</div>
-                    <form method="GET" action="{{ route('keranjang.index', $barang->id) }}">
-                        @csrf
-                        <button type="submit" class="btn-cart"><i class="fas fa-cart-plus"></i></button>
-                    </form>
-                </div>
+    <div class="container mt-5 pt-3">
+        {{-- FILTER, SORTING, SEARCH --}}
+        <form method="GET" action="{{ route('katalog.shop') }}#katalog" class="row g-2 mb-4">
+            <div class="col-md-4">
+                <label for="kategori_id" class="form-label">Filter Kategori</label>
+                <select name="kategori_id" id="kategori_id" class="form-select">
+                    <option value="">-- Semua Kategori --</option>
+                    @foreach ($kategoris as $kategori)
+                        <option value="{{ $kategori->id }}" {{ request('kategori_id') == $kategori->id ? 'selected' : '' }}>
+                            {{ $kategori->nama_kategori }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
-        @empty
-            <p class="text-muted">Barang tidak ditemukan.</p>
-        @endforelse
+
+            <div class="col-md-3">
+                <label class="form-label">Urutkan</label>
+                <select name="sort" class="form-select" onchange="this.form.submit()">
+                    <option value="">Pilih</option>
+                    <option value="harga_asc" {{ request('sort') == 'harga_asc' ? 'selected' : '' }}>Harga Termurah</option>
+                    <option value="harga_desc" {{ request('sort') == 'harga_desc' ? 'selected' : '' }}>Harga Termahal</option>
+                    <option value="stok_asc" {{ request('sort') == 'stok_asc' ? 'selected' : '' }}>Stok Terendah</option>
+                    <option value="stok_desc" {{ request('sort') == 'stok_desc' ? 'selected' : '' }}>Stok Terbanyak</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Pencarian</label>
+                <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Cari produk...">
+            </div>
+
+            <div class="col-md-1 d-grid align-items-end">
+                <button type="submit" class="btn btn-success" title="Terapkan Filter">
+                    <i class="fas fa-filter"></i>
+                </button>
+            </div>
+
+            <div class="col-md-1 d-grid align-items-end">
+                <a href="{{ route('katalog.shop') }}#katalog" class="btn btn-outline-danger" title="Reset Filter">
+                    <i class="fas fa-sync-alt"></i>
+                </a>
+            </div>
+        </form>
+
+        {{-- KATALOG --}}
+        <div id="katalog" class="katalog-container">
+            @forelse ($barangs as $barang)
+                <div class="katalog-card position-relative">
+                    <div class="badge">{{ $barang->kategori->nama_kategori ?? 'Tidak ada kategori' }}</div>
+                    <img src="{{ $barang->gambar ? asset('storage/' . $barang->gambar) : 'https://via.placeholder.com/300x180?text=No+Image' }}" alt="{{ $barang->nama_barang }}">
+                    
+                    <div class="katalog-body">
+                        <div class="katalog-title">{{ $barang->nama_barang }}</div>
+                        <div class="katalog-desc">{{ $barang->deskripsi }}</div>
+                        <div class="text-muted mt-1" style="font-size:12px;">Stok: {{ $barang->stok }}</div>
+                    </div>
+
+                    <div class="katalog-footer">
+                        <div class="harga">Rp {{ number_format($barang->harga, 0, ',', '.') }}</div>
+                        {{-- Tombol keranjang sementara nonaktif --}}
+                        <button type="button" class="btn-cart" onclick="alert('Fitur keranjang belum aktif')">
+                            <i class="fas fa-cart-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            @empty
+                <p class="text-muted">Barang tidak ditemukan.</p>
+            @endforelse
+        </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
