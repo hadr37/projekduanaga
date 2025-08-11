@@ -317,41 +317,25 @@ return [
         'icon' => 'fas fa-fw fa-tachometer-alt',
     ],
     [
-        'text' => 'Katalog',
-        'url'  => 'katalog',
-        'icon' => 'fas fa-fw fa-th-list',
+    'text' => 'Kategori barang',
+    'url'  => 'kategori',
+    'icon' => 'fas fa-fw fa-list',
     ],
+  [
+    'text' => 'Barang',
+    'url'  => '/barang',
+    'icon' => 'fas fa-fw fa-list',
+],
     [
         'text' => 'Users',
         'url'  => 'admin/users',
         'icon' => 'fas fa-fw fa-users',
     ],
-    [
-    'text' => 'Kategori',
-    'url'  => 'kategori',
-    'icon' => 'fas fa-fw fa-list',
-    ],
-  [
-    'text' => 'Dashboard admin',
-    'url'  => '/barang',
-    'icon' => 'fas fa-fw fa-list',
-],
 
-    [
-        'type' => 'sidebar-menu-search',
-        'text' => 'search',
-    ],
     [
         'text' => 'blog',
         'url' => 'admin/blog',
         'can' => 'manage-blog',
-    ],
-    [
-        'text' => 'pages',
-        'url' => 'admin/pages',
-        'icon' => 'far fa-fw fa-file',
-        'label' => 4,
-        'label_color' => 'success',
     ],
     ['header' => 'account_settings'],
     [
