@@ -17,9 +17,7 @@
     </div>
 @endif
 
-<a href="{{ route('admin.users.create') }}" class="btn btn-success mb-3">
-    <i class="fas fa-plus"></i> Tambah User
-</a>
+<a href="{{ route('admin.users.create') }}" class="btn btn-success mb-3">Tambah User</a>
 <form method="GET" action="{{ route('admin.users.index') }}" class="mb-3">
     <div class="input-group">
         <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Cari nama atau email...">
@@ -52,16 +50,13 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ ucfirst($user->role) }}</td>
                     <td>
-                        <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-warning btn-sm" title="Edit">
-                            <i class="fas fa-edit"></i>
+                        <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-warning btn-sm" title="Edit">Edit
                         </a>
 
                         <form action="{{ route('admin.users.destroy', $user) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus user ini?')">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" title="Hapus">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
+                            <button type="submit" class="btn btn-danger btn-sm" title="Hapus">Hapus</button>
                         </form>
                     </td>
                 </tr>
