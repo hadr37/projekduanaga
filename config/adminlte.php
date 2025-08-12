@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'Admin Dua Naga Corporation',
+    'title' => 'Admin Dua Naga Corporation', 
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -327,7 +327,7 @@ return [
     'icon' => 'fas fa-fw fa-list',
 ],
     [
-        'text' => 'Users',
+        'text' => 'Users', 
         'url'  => 'admin/users',
         'icon' => 'fas fa-fw fa-users',
     ],
