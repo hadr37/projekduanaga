@@ -32,7 +32,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Nama Barang</label>
-                    <input type="text" name="nama_barang" value="{{ old('nama_barang') }}" class="form-control" placeholder="Contoh: Facial Wash XYZ" required>
+                    <input type="text" name="nama_barang" value="{{ old('nama_barang') }}" class="form-control" placeholder="Contoh: Wardah Lightening" required>
                 </div>
             </div>
         </div>
