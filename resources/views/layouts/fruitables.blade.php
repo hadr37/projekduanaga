@@ -246,7 +246,7 @@
 {{-- FILTER & SEARCH --}}
 <form method="GET" action="{{ route('katalog') }}#katalog" id="filterForm" class="d-flex justify-content-between align-items-center px-4 py-2" style="gap: 15px; flex-wrap: wrap;">
     <div style="min-width: 200px;">
-         <div class="col-md-4">
+        <div class="col-md-4">
             <label for="kategori_id" class="form-label">Filter Kategori</label>
             <select name="kategori_id" id="kategori_id" class="form-select">
                 <option value="">-- Semua Kategori --</option>

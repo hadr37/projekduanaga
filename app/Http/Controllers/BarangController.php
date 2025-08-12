@@ -33,7 +33,7 @@ class BarangController extends Controller
         // Hitung jumlah barang per kategori
         $kategoriCount = Kategori::withCount('barang')->pluck('barang_count', 'nama_kategori');
 
-        return view('barang.index', compact('barangs', 'kategoris', 'kategoriCount'));
+        return view('admin.barang.index', compact('barangs', 'kategoris', 'kategoriCount'));
     }
 
     /**
@@ -43,7 +43,7 @@ class BarangController extends Controller
     {
         $kategoris = Kategori::orderBy('nama_kategori')->get();
         $kategoriCount = Kategori::withCount('barang')->pluck('barang_count', 'nama_kategori');
-        return view('barang.create', compact('kategoris', 'kategoriCount'));
+        return view('admin.barang.create', compact('kategoris', 'kategoriCount'));
     }
 
     /**
@@ -66,7 +66,7 @@ class BarangController extends Controller
         }
 
         Barang::create($validated);
-        return redirect()->route('barang.index')->with('success', 'Data berhasil ditambahkan.');
+        return redirect()->route('admin.barang.index')->with('success', 'Data berhasil ditambahkan.');
     }
 
     /**
@@ -76,7 +76,7 @@ class BarangController extends Controller
     {
         $kategoris = Kategori::orderBy('nama_kategori')->get();
         $kategoriCount = Kategori::withCount('barang')->pluck('barang_count', 'nama_kategori');
-        return view('barang.edit', compact('barang', 'kategoris', 'kategoriCount'));
+        return view('admin.barang.edit', compact('barang', 'kategoris', 'kategoriCount'));
     }
 
     /**
@@ -99,7 +99,7 @@ class BarangController extends Controller
         }
 
         $barang->update($validated);
-        return redirect()->route('barang.index')->with('success', 'Data berhasil diupdate.');
+        return redirect()->route('admin.barang.index')->with('success', 'Data berhasil diupdate.');
     }
 
     /**
@@ -108,7 +108,7 @@ class BarangController extends Controller
     public function destroy(Barang $barang)
     {
         $barang->delete();
-        return redirect()->route('barang.index')->with('success', 'Data berhasil dihapus.');
+        return redirect()->route('admin.barang.index')->with('success', 'Data berhasil dihapus.');
     }
 
    // Halaman katalog depan (limit 6)

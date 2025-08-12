@@ -9,39 +9,75 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    // Tampilkan form login
+    /**
+     * Tampilkan form login
+     */
     public function showLogin()
     {
         return view('auth.login');
     }
 
-    // Tampilkan form register
+    /**
+     * Tampilkan form register user
+     */
     public function showRegister()
     {
         return view('auth.register');
     }
 
-    // Proses registrasi user baru
+    /**
+     * Tampilkan form register admin
+     */
+    public function showRegisterAdmin()
+    {
+        return view('auth.register_admin');
+    }
+
+    /**
+     * Proses registrasi user
+     */
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|unique:users,email',
             'password' => 'required|confirmed|min:6',
-            // 'role' tidak perlu divalidasi karena kita set default 'user'
         ]);
 
         User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name'     => $request->name,
+            'email'    => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'user', // default role khusus user
+            'role'     => 'user', // default role user
         ]);
 
         return redirect()->route('login')->with('success', 'Pendaftaran berhasil. Silakan login.');
     }
 
-    // Proses login user
+    /**
+     * Proses registrasi admin
+     */
+    public function registerAdmin(Request $request)
+    {
+        $request->validate([
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|unique:users,email',
+            'password' => 'required|confirmed|min:6',
+        ]);
+
+        User::create([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => Hash::make($request->password),
+            'role'     => 'admin', // langsung jadi admin
+        ]);
+
+        return redirect()->route('login')->with('success', 'Registrasi admin berhasil. Silakan login.');
+    }
+
+    /**
+     * Proses login
+     */
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -49,7 +85,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
-            // Redirect berdasarkan role
+            // Redirect sesuai role
             if ($user->role === 'admin') {
                 return redirect()->route('admin.dashboard');
             } elseif ($user->role === 'user') {
@@ -63,7 +99,9 @@ class AuthController extends Controller
         return back()->with('error', 'Email atau password salah.');
     }
 
-    // Logout
+    /**
+     * Logout
+     */
     public function logout()
     {
         Auth::logout();

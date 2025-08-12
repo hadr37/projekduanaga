@@ -313,24 +313,25 @@ return [
     // Sidebar items:
     [
         'text' => 'Dashboard',
-        'url'  => 'home',
+        'url'  => 'admin/dashboard',
         'icon' => 'fas fa-fw fa-tachometer-alt',
     ],
-    [
-    'text' => 'Kategori barang',
-    'url'  => 'kategori',
-    'icon' => 'fas fa-fw fa-list',
-    ],
-  [
-    'text' => 'Barang',
-    'url'  => '/barang',
+[
+    'text' => 'Kategori Barang',
+    'route' => 'admin.kategori.index',
     'icon' => 'fas fa-fw fa-list',
 ],
-    [
-        'text' => 'Users', 
-        'url'  => 'admin/users',
-        'icon' => 'fas fa-fw fa-users',
-    ],
+[
+    'text' => 'Barang',
+    'route' => 'admin.barang.index',
+    'icon' => 'fas fa-fw fa-list',
+],
+[
+    'text' => 'Users', 
+    'route' => 'admin.users.index',
+    'icon' => 'fas fa-fw fa-users',
+],
+
 
     [
         'text' => 'blog',

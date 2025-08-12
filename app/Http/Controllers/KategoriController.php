@@ -18,13 +18,13 @@ class KategoriController extends Controller
 
         $kategoris = $query->orderBy('nama_kategori')->get();
 
-        return view('kategori.index', compact('kategoris'));
+        return view('admin.kategori.index', compact('kategoris'));
     }
 
     // Tampilkan form tambah kategori
     public function create()
     {
-        return view('kategori.create');
+        return view('admin.kategori.create');
     }
 
     // Simpan kategori baru
@@ -35,13 +35,13 @@ class KategoriController extends Controller
         ]);
 
         Kategori::create($request->all());
-        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil ditambahkan');
+        return redirect()->route('admin.kategori.index')->with('success', 'Kategori berhasil ditambahkan');
     }
 
     // Tampilkan form edit kategori
     public function edit(Kategori $kategori)
     {
-        return view('kategori.edit', compact('kategori'));
+        return view('admin.kategori.edit', compact('kategori'));
     }
 
     // Update data kategori
@@ -52,13 +52,13 @@ class KategoriController extends Controller
         ]);
 
         $kategori->update($request->all());
-        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil diperbarui');
+        return redirect()->route('admin.kategori.index')->with('success', 'Kategori berhasil diperbarui');
     }
 
     // Hapus kategori
     public function destroy(Kategori $kategori)
     {
         $kategori->delete();
-        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus');
+        return redirect()->route('admin.kategori.index')->with('success', 'Kategori berhasil dihapus');
     }
 }
