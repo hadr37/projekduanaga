@@ -157,11 +157,17 @@
             </div>
 
             {{-- Gambar barang --}}
-            <img 
-                src="{{ $barang->gambar ?? 'https://via.placeholder.com/300x180?text=No+Image' }}" 
-                alt="{{ $barang->nama_barang }}"
-            >
-            
+@php
+    $gambar = $barang->gambar
+        ? (Str::startsWith($barang->gambar, ['http', 'assets/'])
+            ? asset($barang->gambar) // Seeder (public path) atau URL langsung
+            : asset('storage/' . $barang->gambar)) // Upload manual
+        : 'https://via.placeholder.com/300x180?text=No+Image';
+@endphp
+
+<img src="{{ $gambar }}" alt="{{ $barang->nama_barang }}">
+
+
             {{-- Body --}}
             <div class="katalog-body">
                 <div class="katalog-title">{{ $barang->nama_barang }}</div>

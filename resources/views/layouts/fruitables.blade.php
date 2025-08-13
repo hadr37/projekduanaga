@@ -243,34 +243,6 @@
                         <div class="col-lg-4 text-start">
                             <h1>Produk Kami</h1>
                         </div>
-{{-- FILTER & SEARCH --}}
-<form method="GET" action="{{ route('katalog') }}#katalog" id="filterForm" class="d-flex justify-content-between align-items-center px-4 py-2" style="gap: 15px; flex-wrap: wrap;">
-    <div style="min-width: 200px;">
-        <div class="col-md-4">
-            <label for="kategori_id" class="form-label">Filter Kategori</label>
-            <select name="kategori_id" id="kategori_id" class="form-select">
-                <option value="">-- Semua Kategori --</option>
-                @foreach ($kategoris as $kategori)
-                    <option value="{{ $kategori->id }}" {{ request('kategori_id') == $kategori->id ? 'selected' : '' }}>
-                        {{ $kategori->nama_kategori }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-
-    <div class="input-group" style="min-width: 300px;">
-        <input type="text" name="search" id="searchInput" class="form-control" placeholder="Cari nama barang..." value="{{ request('search') }}">
-        <button class="btn btn-outline-secondary" type="submit">
-            <i class="fas fa-search"></i>
-        </button>
-        <a href="{{ route('katalog') }}#katalog" class="btn btn-outline-danger" title="Reset Filter">
-            <i class="fas fa-sync-alt"></i>
-        </a>
-    </div>
-</form>
-
-
-
 
 {{-- SCRIPT --}}
 <script>
