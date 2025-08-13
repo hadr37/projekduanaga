@@ -10,6 +10,7 @@ class BarangSeeder extends Seeder
 {
     public function run()
     {
+        DB::table('barangs')->truncate(); 
         $faker = Faker::create();
 
         for ($i = 1; $i <= 50; $i++) {
