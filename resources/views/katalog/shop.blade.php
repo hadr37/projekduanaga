@@ -22,7 +22,7 @@
         body { padding-top: 90px; }
         .katalog-container {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 15px;
             padding: 20px;
         }
@@ -147,30 +147,45 @@
         </form>
 
         {{-- KATALOG --}}
-        <div id="katalog" class="katalog-container">
-            @forelse ($barangs as $barang)
-                <div class="katalog-card position-relative">
-                    <div class="badge">{{ $barang->kategori->nama_kategori ?? 'Tidak ada kategori' }}</div>
-                    <img src="{{ $barang->gambar ? asset('storage/' . $barang->gambar) : 'https://via.placeholder.com/300x180?text=No+Image' }}" alt="{{ $barang->nama_barang }}">
-                    
-                    <div class="katalog-body">
-                        <div class="katalog-title">{{ $barang->nama_barang }}</div>
-                        <div class="katalog-desc">{{ $barang->deskripsi }}</div>
-                        <div class="text-muted mt-1" style="font-size:12px;">Stok: {{ $barang->stok }}</div>
-                    </div>
+       <div id="katalog" class="katalog-container">
+    @forelse ($barangs as $barang)
+        <div class="katalog-card position-relative">
+            
+            {{-- Badge kategori --}}
+            <div class="badge">
+                {{ $barang->kategori->nama_kategori ?? 'Tidak ada kategori' }}
+            </div>
 
-                    <div class="katalog-footer">
-                        <div class="harga">Rp {{ number_format($barang->harga, 0, ',', '.') }}</div>
-                        {{-- Tombol keranjang sementara nonaktif --}}
-                        <button type="button" class="btn-cart" onclick="alert('Fitur keranjang belum aktif')">
-                            <i class="fas fa-cart-plus"></i>
-                        </button>
-                    </div>
+            {{-- Gambar barang --}}
+            <img 
+                src="{{ $barang->gambar ?? 'https://via.placeholder.com/300x180?text=No+Image' }}" 
+                alt="{{ $barang->nama_barang }}"
+            >
+            
+            {{-- Body --}}
+            <div class="katalog-body">
+                <div class="katalog-title">{{ $barang->nama_barang }}</div>
+                <div class="katalog-desc">{{ $barang->deskripsi }}</div>
+                <div class="text-muted mt-1" style="font-size:12px;">
+                    Stok: {{ $barang->stok }}
                 </div>
-            @empty
-                <p class="text-muted">Barang tidak ditemukan.</p>
-            @endforelse
+            </div>
+
+            {{-- Footer --}}
+            <div class="katalog-footer">
+                <div class="harga">
+                    Rp {{ number_format($barang->harga, 0, ',', '.') }}
+                </div>
+                <button type="button" class="btn-cart" onclick="alert('Fitur keranjang belum aktif')">
+                    <i class="fas fa-cart-plus"></i>
+                </button>
+            </div>
         </div>
+    @empty
+        <p class="text-muted">Barang tidak ditemukan.</p>
+    @endforelse
+</div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

@@ -75,7 +75,7 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="index.html" class="nav-item nav-link active">Home</a>
+                            <a href="{{ url('katalog') }}" class="nav-item nav-link active">Home</a>
                             <a href="{{ route('katalog.shop') }}" class="nav-item nav-link">Shop</a>
                             <a href="shop-detail.html" class="nav-item nav-link">DetailPesanan</a>
                             <div class="nav-item dropdown">
@@ -301,14 +301,15 @@
     filterKategori.addEventListener('change', filterBarang);
 </script>
 
-                        <style>
-    .katalog-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 20px;
-        padding: 20px;
-        font-family: 'Segoe UI', sans-serif;
-    }
+ <style>
+.katalog-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* selalu 3 kolom */
+    gap: 20px;
+    padding: 20px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
 
     .katalog-card {
         border: 1px solid #d0e9b5;
@@ -418,32 +419,50 @@
     }
 </style>
 <div id="katalog">
-<div class="katalog-container">
-    @foreach ($barangs as $barang)
-        <div class="katalog-card">
-            <div class="badge">{{ $barang->kategori }}</div>
+    <div class="katalog-container">
+        @foreach ($barangs as $barang)
+            <div class="katalog-card">
+                
+                {{-- Badge kategori --}}
+                <div class="badge">{{ $barang->kategori->nama_kategori ?? 'Tidak ada kategori' }}</div>
 
-            @if($barang->gambar)
-                <img src="{{ asset('storage/' . $barang->gambar) }}" alt="{{ $barang->nama_barang }}" class="ratio ratio-1x1">
-            @else
-                <img src="https://via.placeholder.com/300x180?text=No+Image" alt="No image">
-            @endif
+                {{-- Gambar barang --}}
+{{-- Gambar barang --}}
+@if ($barang->gambar)
+    <img 
+        src="{{ asset($barang->gambar) }}" 
+        alt="{{ $barang->nama_barang }}" 
+        class="ratio ratio-1x1"
+    >
+@else
+    <img 
+        src="https://via.placeholder.com/300x180?text=No+Image" 
+        alt="No image"
+    >
+@endif
 
-            <div class="katalog-body">
-                <div class="katalog-title">{{ $barang->nama_barang }}</div>
-                <div class="katalog-desc">{{ $barang->deskripsi }}</div>
-                <div class="katalog-stock">Stok: {{ $barang->stok }}</div>
+
+                {{-- Body katalog --}}
+                <div class="katalog-body">
+                    <div class="katalog-title">{{ $barang->nama_barang }}</div>
+                    <div class="katalog-desc">{{ $barang->deskripsi }}</div>
+                    <div class="katalog-stock">Stok: {{ $barang->stok }}</div>
+                </div>
+
+                {{-- Footer katalog --}}
+                <div class="katalog-footer">
+                    <div class="harga">
+                        Rp {{ number_format($barang->harga, 0, ',', '.') }}
+                    </div>
+                    <button class="btn-cart">
+                        <i class="fas fa-shopping-cart"></i> Beli
+                    </button>
+                </div>
             </div>
-
-            <div class="katalog-footer">
-                <div class="harga">Rp {{ number_format($barang->harga, 0, ',', '.') }}</div>
-                <button class="btn-cart">
-                    <i class="fas fa-shopping-cart"></i> Beli
-                </button>
-            </div>
-        </div>
-    @endforeach
+        @endforeach
+    </div>
 </div>
+
  {{-- Tombol Lihat Semua --}}
         <div class="text-center mt-3">
             <a href="{{ route('katalog.shop') }}" class="btn btn-outline-primary">

@@ -20,6 +20,7 @@ class BarangSeeder extends Seeder
                 'deskripsi' => $faker->sentence(rand(6, 12)),
                 'harga' => $faker->numberBetween(10000, 20000000),
                 'stok' => $faker->numberBetween(0, 100),
+                'gambar' => 'assets/img/Laravel.png',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
