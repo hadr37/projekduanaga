@@ -9,22 +9,20 @@ use Faker\Factory as Faker;
 class KategoriSeeder extends Seeder
 {
     public function run()
-    {
-        $faker = Faker::create();
+{
+    $faker = \Faker\Factory::create();
 
-        $kategoriList = [];
+    if (\App\Models\Kategori::count() > 0) {
+        return; // Jangan seed kalau sudah ada kategori
+    }
 
-        for ($i = 1; $i <= 10; $i++) {
-            $kategoriList[] = [
-                'nama_kategori' => $faker->unique()->word(),
-                'deskripsi' => $faker->sentence(10),
-                'gambar' => 'assets/img/kategori/' . $faker->image('public/assets/img/kategori', 640, 480, null, false), // generate random image
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
-        }
-
-        DB::table('kategoris')->insert($kategoriList);
+    for ($i = 1; $i <= 10; $i++) {
+        \App\Models\Kategori::create([
+            'nama_kategori' => $faker->unique()->word(),
+            'deskripsi' => $faker->sentence(10),
+            'gambar' => 'assets/img/kategori/' . $faker->image('public/assets/img/kategori', 640, 480, null, false),
+        ]);
     }
 }
 
+}

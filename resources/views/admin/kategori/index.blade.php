@@ -42,10 +42,12 @@
                     <td>{{ $kategori->deskripsi ?? '-' }}</td>
                     <td class="text-center">
                         @if($kategori->gambar)
-                            <img src="{{ asset('storage/kategori/' . $kategori->gambar) }}" alt="Gambar Kategori" width="80" class="rounded">
-                        @else
-                            <span class="text-muted">Tidak ada</span>
-                        @endif
+    <img src="{{ asset('storage/' . $kategori->gambar) }}" alt="Gambar Kategori" width="80" class="rounded">
+@else
+    <span class="text-muted">Tidak ada</span>
+@endif
+
+
                     </td>
                     <td class="text-center">
                         <a href="{{ route('admin.kategori.edit', $kategori) }}" class="btn btn-warning btn-sm">Edit</a>
