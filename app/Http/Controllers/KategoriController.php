@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kategori;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class KategoriController extends Controller
 {
@@ -31,10 +32,21 @@ class KategoriController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_kategori' => 'required|string|max:255'
+            'nama_kategori' => 'required|string|max:255',
+            'deskripsi'     => 'nullable|string',
+            'gambar'        => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048'
         ]);
 
-        Kategori::create($request->all());
+        $data = $request->only(['nama_kategori', 'deskripsi']);
+
+        // Upload gambar jika ada
+        if ($request->hasFile('gambar')) {
+            $path = $request->file('gambar')->store('kategori', 'public');
+            $data['gambar'] = $path;
+        }
+
+        Kategori::create($data);
+
         return redirect()->route('admin.kategori.index')->with('success', 'Kategori berhasil ditambahkan');
     }
 
@@ -48,17 +60,39 @@ class KategoriController extends Controller
     public function update(Request $request, Kategori $kategori)
     {
         $request->validate([
-            'nama_kategori' => 'required|string|max:255'
+            'nama_kategori' => 'required|string|max:255',
+            'deskripsi'     => 'nullable|string',
+            'gambar'        => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048'
         ]);
 
-        $kategori->update($request->all());
+        $data = $request->only(['nama_kategori', 'deskripsi']);
+
+        // Upload gambar baru jika ada
+        if ($request->hasFile('gambar')) {
+            // Hapus gambar lama
+            if ($kategori->gambar && Storage::disk('public')->exists($kategori->gambar)) {
+                Storage::disk('public')->delete($kategori->gambar);
+            }
+
+            $path = $request->file('gambar')->store('kategori', 'public');
+            $data['gambar'] = $path;
+        }
+
+        $kategori->update($data);
+
         return redirect()->route('admin.kategori.index')->with('success', 'Kategori berhasil diperbarui');
     }
 
     // Hapus kategori
     public function destroy(Kategori $kategori)
     {
+        // Hapus gambar jika ada
+        if ($kategori->gambar && Storage::disk('public')->exists($kategori->gambar)) {
+            Storage::disk('public')->delete($kategori->gambar);
+        }
+
         $kategori->delete();
+
         return redirect()->route('admin.kategori.index')->with('success', 'Kategori berhasil dihapus');
     }
 }

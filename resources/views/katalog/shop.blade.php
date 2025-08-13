@@ -22,7 +22,7 @@
         body { padding-top: 90px; }
         .katalog-container {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
             padding: 20px;
         }

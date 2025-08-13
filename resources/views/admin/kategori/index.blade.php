@@ -24,20 +24,30 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <table class="table table-bordered">
-        <thead>
+    <table class="table table-bordered align-middle">
+        <thead class="text-center">
             <tr>
-                <th>No</th>
-                <th>Nama Kategori</th>
-                <th>Aksi</th>
+                <th width="5%">No</th>
+                <th width="20%">Nama Kategori</th>
+                <th width="35%">Deskripsi</th>
+                <th width="20%">Gambar</th>
+                <th width="20%">Aksi</th>
             </tr>
         </thead>
         <tbody>
             @forelse($kategoris as $kategori)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    <td class="text-center">{{ $loop->iteration }}</td>
                     <td>{{ $kategori->nama_kategori }}</td>
-                    <td>
+                    <td>{{ $kategori->deskripsi ?? '-' }}</td>
+                    <td class="text-center">
+                        @if($kategori->gambar)
+                            <img src="{{ asset('storage/kategori/' . $kategori->gambar) }}" alt="Gambar Kategori" width="80" class="rounded">
+                        @else
+                            <span class="text-muted">Tidak ada</span>
+                        @endif
+                    </td>
+                    <td class="text-center">
                         <a href="{{ route('admin.kategori.edit', $kategori) }}" class="btn btn-warning btn-sm">Edit</a>
                         <form action="{{ route('admin.kategori.destroy', $kategori) }}" method="POST" style="display:inline-block">
                             @csrf
@@ -47,7 +57,9 @@
                     </td>
                 </tr>
             @empty
-                <tr><td colspan="3" class="text-center">Kategori tidak ditemukan.</td></tr>
+                <tr>
+                    <td colspan="5" class="text-center">Kategori tidak ditemukan.</td>
+                </tr>
             @endforelse
         </tbody>
     </table>

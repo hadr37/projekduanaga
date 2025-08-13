@@ -20,7 +20,7 @@
         {{-- Filter Kategori --}}
         <div class="col-md-4">
             <label for="kategori_id" class="form-label">Filter Kategori</label>
-            <select name="kategori_id" id="kategori_id" class="form-select">
+            <select name="kategori_id" id="kategori_id" class="form-control">
                 <option value="">-- Semua Kategori --</option>
                 @foreach ($kategoris as $kategori)
                     <option value="{{ $kategori->id }}" {{ request('kategori_id') == $kategori->id ? 'selected' : '' }}>
@@ -37,17 +37,6 @@
         </div>
     </form>
 
-    {{-- 🧾 Statistik Jumlah per Kategori --}}
-    @if ($kategoriCount->count())
-        <div class="mb-3">
-            <strong>📊 Jumlah Barang per Kategori:</strong>
-            <ul>
-                @foreach ($kategoriCount as $kategori => $total)
-                    <li>{{ $kategori }}: {{ $total }} item</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
     {{-- ➕ Tombol Tambah --}}
     <a href="{{ route('admin.barang.create') }}" class="btn btn-success mb-3">+ Tambah Barang</a>

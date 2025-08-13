@@ -91,7 +91,7 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function () 
     Route::resource('kategori', KategoriController::class);
 });
 
-
+Route::resource('barang', BarangController::class);
 
 
 
