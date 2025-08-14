@@ -69,7 +69,7 @@
             </div>
             <div class="container px-0">
                 <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                    <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6">Skincare Dua Naga</h1></a>
+                    <a href="{{ route('home') }}" class="navbar-brand"><h1 class="text-primary display-6">Skincare Dua Naga</h1></a>
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="fa fa-bars text-primary"></span>
                     </button>
@@ -77,7 +77,7 @@
                         <div class="navbar-nav mx-auto">
                             <a href="{{ url('katalog') }}" class="nav-item nav-link active">Home</a>
                             <a href="{{ route('katalog.shop') }}" class="nav-item nav-link">Shop</a>
-                            <a href="shop-detail.html" class="nav-item nav-link">DetailPesanan</a>
+                            <a href="shop-detail.html" class="nav-item nav-link">Detail Pesanan</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0">
@@ -392,27 +392,21 @@
 </style>
 <div id="katalog">
     <div class="katalog-container">
-        @foreach ($barangs as $barang)
+        @foreach ($barangs->take(6) as $barang)
             <div class="katalog-card">
                 
                 {{-- Badge kategori --}}
                 <div class="badge">{{ $barang->kategori->nama_kategori ?? 'Tidak ada kategori' }}</div>
 
-                {{-- Gambar barang --}}
 {{-- Gambar barang --}}
-@if ($barang->gambar)
-    <img 
-        src="{{ asset($barang->gambar) }}" 
-        alt="{{ $barang->nama_barang }}" 
-        class="ratio ratio-1x1"
-    >
-@else
-    <img 
-        src="https://via.placeholder.com/300x180?text=No+Image" 
-        alt="No image"
-    >
-@endif
-
+@php
+    $gambar = $barang->gambar
+        ? (Str::startsWith($barang->gambar, ['http', 'assets/'])
+            ? asset($barang->gambar) // Seeder (public path) atau URL langsung
+            : asset('storage/' . $barang->gambar)) // Upload manual
+        : 'https://via.placeholder.com/300x180?text=No+Image';
+@endphp
+<img src="{{ $gambar }}" alt="{{ $barang->nama_barang }}">
 
                 {{-- Body katalog --}}
                 <div class="katalog-body">
@@ -459,8 +453,8 @@
                     <div class="service-item rounded border border-secondary overflow-hidden">
                         <img src="{{ asset('assets/img/polosan1.jpg') }}" class="img-fluid w-100 service-img" alt="">
                         <div class="service-footer bg-success text-center p-4">
-                            <h5 class="text-white">Fresh Apples</h5>
-                            <h3 class="mb-0 text-white">20% OFF</h3>
+                            <h5 class="text-white">Aman Untuk Kulit</h5>
+                            <h3 class="mb-0 text-white">100%</h3>
                         </div>
                     </div>
                 </a>
@@ -472,8 +466,8 @@
                     <div class="service-item rounded border border-dark overflow-hidden">
                         <img src="{{ asset('assets/img/polosan2.jpg') }}" class="img-fluid w-100 service-img" alt="">
                         <div class="service-footer bg-success text-center p-4">
-                            <h5 class="text-white">Tasty Fruits</h5>
-                            <h3 class="mb-0 text-white">Free delivery</h3>
+                            <h5 class="text-white">Terdaftar di</h5>
+                            <h3 class="mb-0 text-white">BPOM dan LPPOM</h3>
                         </div>
                     </div>
                 </a>
@@ -485,8 +479,8 @@
                     <div class="service-item rounded border border-primary overflow-hidden">
                         <img src="{{ asset('assets/img/polosan3.jpg') }}" class="img-fluid w-100 service-img" alt="">
                         <div class="service-footer bg-success text-center p-4">
-                            <h5 class="text-white">Exotic Vegetable</h5>
-                            <h3 class="mb-0 text-white">Discount 30$</h3>
+                            <h5 class="text-white">Tidak Menimbulkan Iritasi</h5>
+                            <h3 class="mb-0 text-white">100% Aman</h3>
                         </div>
                     </div>
                 </a>
@@ -517,74 +511,31 @@
 
 
 
-        <!-- Vesitable Shop Start-->
-        <div class="container-fluid vesitable py-5">
-            <div class="container py-5">
-                <h1 class="mb-0">Katalog Kosmetik</h1>
-                <div class="owl-carousel vegetable-carousel justify-content-center">
-                    <div class="border border-primary rounded position-relative vesitable-item">
-                        <div class="vesitable-img">
-                            <img src="{{ asset('assets/img/mask.jpeg') }}" class="img-fluid w-100 rounded-top" alt="">
-                        </div>
-                        <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Mask</div>
-                        <div class="p-4 rounded-bottom">
-                            <h4>Masker Wajah</h4>
-                            <p>Masker wajah berfungsi untuk membersihkan, melembapkan, mengencangkan, cerahkan, dan rawat kulit agar lebih cerah berseri.</p>
-                        </div>
+    <div class="container vesitable py-5">
+    <h1 class="mb-4 text-center">Katalog Kosmetik</h1>
+    <div class="row g-4 justify-content-center">
+        @foreach($kategoris as $kategori)
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="border border-primary rounded position-relative vesitable-item" style="overflow: hidden;">
+                <div class="vesitable-img" style="position: relative;">
+                    <img src="{{ asset('storage/' . $kategori->gambar) }}" 
+                         class="img-fluid w-100 rounded-top" 
+                         alt="{{ $kategori->nama_kategori }}" 
+                         style="height: 180px; object-fit: cover;">
+                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute" 
+                         style="top: 10px; right: 10px; font-weight: bold; font-size: 0.85rem;">
+                        {{ $kategori->nama_kategori }}
                     </div>
-                    <div class="border border-primary rounded position-relative vesitable-item">
-                        <div class="vesitable-img">
-                            <img src="{{ asset('assets/img/toner.jpeg') }}" class="img-fluid w-100 rounded-top" alt="">
-                        </div>
-                        <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Toner</div>
-                        <div class="p-4 rounded-bottom">
-                            <h4>Toner</h4>
-                            <p>Toner adalah produk skincare yang berfungsi mengangkat sisa kotoran, minyak, dan makeup yang tertinggal setelah mencuci muka.</p>
-                        </div>
-                    </div>
-                    <div class="border border-primary rounded position-relative vesitable-item">
-                        <div class="vesitable-img">
-                            <img src="{{ asset('assets/img/cream.jpg') }}" class="img-fluid w-100 rounded-top bg-light" alt="">
-                        </div>
-                        <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Cream</div>
-                        <div class="p-4 rounded-bottom">
-                            <h4>Cream Wajah</h4>
-                            <p>Cream Wajah adalah pelembap ringan yang membantu mencerahkan, melembapkan, dan melindungi kulit dari sinar UV serta tanda penuaan.</p>
-                        </div>
-                    </div>
-                    <div class="border border-primary rounded position-relative vesitable-item">
-                        <div class="vesitable-img">
-                            <img src="{{ asset('assets/img/facialfoam.jpeg') }}" class="img-fluid w-100 rounded-top" alt="">
-                        </div>
-                        <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Facial Foam</div>
-                        <div class="p-4 rounded-bottom">
-                            <h4>Facial Foam</h4>
-                            <p>Facial foam adalah produk pembersih wajah yang berbentuk krim yang menghasilkan busa melimpah saat digunakan.</p>
-                        </div>
-                    </div>
-                    <div class="border border-primary rounded position-relative vesitable-item">
-                        <div class="vesitable-img">
-                            <img src="{{ asset('assets/img/serum.jpg') }}" class="img-fluid w-100 rounded-top" alt="">
-                        </div>
-                        <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Serum</div>
-                        <div class="p-4 rounded-bottom">
-                            <h4>Serum Wajah</h4>
-                            <p>Serum wajah adalah produk perawatan kulit dengan konsentrasi bahan aktif tinggi, bertekstur ringan di berbagai kulit.</p>
-                        </div>
-                    </div>
-                    <div class="border border-primary rounded position-relative vesitable-item">
-                        <div class="vesitable-img">
-                            <img src="{{ asset('assets/img/mostu.jpeg') }}" class="img-fluid w-100 rounded-top" alt="">
-                        </div>
-                        <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">Moisturizer</div>
-                        <div class="p-4 rounded-bottom">
-                            <h4>Moisturizer</h4>
-                            <p>Moisturizer adalah produk perawatan kulit yang berfungsi untuk melembapkan, menghidrasi, dan menjaga keseimbangan kelembapan kulit</p>
-                        </div>
-                    </div>
+                </div>
+                <div class="p-3 rounded-bottom text-center">
+                    <h5 class="mb-0 fw-bold">{{ $kategori->nama_kategori }}</h5>
                 </div>
             </div>
         </div>
+        @endforeach
+    </div>
+</div>
+
         <!-- Vesitable Shop End -->
 
 

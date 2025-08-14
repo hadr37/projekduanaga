@@ -182,9 +182,10 @@
                 <div class="harga">
                     Rp {{ number_format($barang->harga, 0, ',', '.') }}
                 </div>
-                <button type="button" class="btn-cart" onclick="alert('Fitur keranjang belum aktif')">
-                    <i class="fas fa-cart-plus"></i>
-                </button>
+                <a href="{{ route('produk.show', $barang->id) }}" class="btn-cart">
+    <i class="fas fa-cart-plus"></i>
+</a>
+
             </div>
         </div>
     @empty

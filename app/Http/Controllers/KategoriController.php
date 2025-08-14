@@ -95,4 +95,9 @@ class KategoriController extends Controller
 
         return redirect()->route('admin.kategori.index')->with('success', 'Kategori berhasil dihapus');
     }
+
+    public function katalogKosmetik() {
+    $kategoris = Kategori::all(); // ambil semua data dari tabel kategori
+    return view('katalog', compact('kategoris'));
+}
 }

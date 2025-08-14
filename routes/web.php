@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\KategoriController;
@@ -90,7 +91,7 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function () 
     // CRUD Kategori
     Route::resource('kategori', KategoriController::class);
 });
-
+Route::get('/produk/{id}', [ProdukController::class, 'show'])->name('produk.show');
 Route::resource('barang', BarangController::class);
 
 

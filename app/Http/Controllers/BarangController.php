@@ -58,7 +58,7 @@ class BarangController extends Controller
             'deskripsi' => 'nullable',
             'harga' => 'required|numeric',
             'stok' => 'required|integer',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
         ]);
 
         if ($request->hasFile('gambar')) {

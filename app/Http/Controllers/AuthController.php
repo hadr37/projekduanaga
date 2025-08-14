@@ -89,7 +89,7 @@ class AuthController extends Controller
             if ($user->role === 'admin') {
                 return redirect()->route('admin.dashboard');
             } elseif ($user->role === 'user') {
-                return redirect()->route('katalog');
+                 return view('layouts.fruitables');
             } else {
                 Auth::logout();
                 return back()->with('error', 'Role tidak dikenali.');

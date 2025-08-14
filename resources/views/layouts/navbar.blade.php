@@ -29,7 +29,7 @@
             </button>
             <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                 <div class="navbar-nav mx-auto">
-                    <a href="{{ url('katalog') }}" class="nav-item nav-link">Home</a>
+                    <a href="{{ route('home') }}" class="nav-item nav-link">Home</a>
                     <a href="{{ route('katalog.shop') }}" class="nav-item nav-link">Shop</a>
                     <a href="#" class="nav-item nav-link">Detail Pesanan</a>
                     <div class="nav-item dropdown">
