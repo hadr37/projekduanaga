@@ -93,6 +93,10 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function () 
 });
 Route::get('/produk/{id}', [ProdukController::class, 'show'])->name('produk.show');
 Route::resource('barang', BarangController::class);
+Route::resource('kategori', KategoriController::class);
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('users', UserController::class);
+});
 Route::get('/admin/dashboard', [BarangController::class, 'dashboard'])->name('admin.dashboard');
 
 
