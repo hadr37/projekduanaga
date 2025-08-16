@@ -93,7 +93,7 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function () 
 });
 Route::get('/produk/{id}', [ProdukController::class, 'show'])->name('produk.show');
 Route::resource('barang', BarangController::class);
-
+Route::get('/admin/dashboard', [BarangController::class, 'dashboard'])->name('admin.dashboard');
 
 
 
