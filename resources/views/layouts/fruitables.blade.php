@@ -69,18 +69,20 @@
             </div>
             <div class="container px-0">
                 <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                    <a href="{{ route('home') }}" class="navbar-brand"><h1 class="text-primary display-6">Skincare Dua Naga</h1></a>
-                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                        <span class="fa fa-bars text-primary"></span>
-                    </button>
-                    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
-                        <div class="navbar-nav mx-auto">
-                            <a href="{{ url('katalog') }}" class="nav-item nav-link active">Home</a>
-                            <a href="{{ route('katalog.shop') }}" class="nav-item nav-link">Shop</a>
-                            <a href="shop-detail.html" class="nav-item nav-link">Pesanan Saya</a>
-                            <a href="{{ route('keranjang.katalog') }}" class="nav-item nav-link">Keranjang</a>
-                            <a href="contact.html" class="nav-item nav-link">Contact</a>
-                        </div>
+    <a href="{{ route('home') }}" class="navbar-brand">
+        <h1 class="text-primary display-6">Skincare Dua Naga</h1>
+    </a>
+    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="fa fa-bars text-primary"></span>
+    </button>
+    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
+<div class="navbar-nav mx-auto">
+    <a href="{{ url('katalog') }}" class="nav-item nav-link {{ Request::is('katalog') ? 'text-success' : '' }}">Home</a>
+    <a href="{{ route('katalog.shop') }}" class="nav-item nav-link {{ Request::is('katalog/shop*') ? 'text-success' : '' }}">Shop</a>
+    <a href="" class="nav-item nav-link {{ Request::is('pesanan') ? 'text-success' : '' }}">Pesanan Saya</a>
+    <a href="{{ route('keranjang.katalog') }}" class="nav-item nav-link {{ Request::is('keranjang*') ? 'text-success' : '' }}">Keranjang</a>
+    <a href="{{ url('contact') }}" class="nav-item nav-link {{ Request::is('contact') ? 'text-success' : '' }}">Contact</a>
+</div>
                         <div class="d-flex m-3 me-0">
     <a href="{{ route('keranjang.katalog') }}" class="position-relative me-4 my-auto">
         <i class="fa fa-shopping-bag fa-2x"></i>
@@ -287,167 +289,140 @@
     filterKategori.addEventListener('change', filterBarang);
 </script>
 
- <style>
+<style>
 .katalog-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* selalu 3 kolom */
+    grid-template-columns: repeat(3, 1fr); /* 3 kolom */
     gap: 20px;
     padding: 20px;
     font-family: 'Segoe UI', sans-serif;
 }
 
+.katalog-card {
+    border: 1px solid #d0e9b5;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    overflow: hidden;
+    text-align: center;
+    background-color: #fff;
+    position: relative;
+}
 
-    .katalog-card {
-        border: 1px solid #d0e9b5;
-        border-radius: 12px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-        overflow: hidden;
-        text-align: center;
-        transition: 0.3s;
-        background-color: #fff;
-        position: relative;
-    }
-
-    .katalog-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-    }
-
-    .badge {
-        background-color: #76c043;
-        color: #fff;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: bold;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-    }
-
- .katalog-card img {
+/* hover dihapus */
+.katalog-card img {
     width: 100%;
     height: 180px;
     object-fit: contain;
-    background-color: #f9f9f9; /* opsional agar latar belakang tetap rapi */
+    background-color: #f9f9f9;
 }
 
+.katalog-body {
+    padding: 15px;
+}
 
-    .katalog-body {
-        padding: 15px;
-        position: relative;
-    }
+.katalog-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
 
-    .katalog-title {
-        font-size: 18px;
-        font-weight: 600;
-        color: #333;
-        margin-bottom: 5px;
-    }
+.katalog-desc {
+    font-size: 13px;
+    color: #666;
+    height: 40px;
+    overflow: hidden;
+}
 
-    .katalog-desc {
-        font-size: 13px;
-        color: #666;
-        height: 40px;
-        overflow: hidden;
-        transition: height 0.3s ease;
-    }
+.katalog-stock {
+    font-size: 13px;
+    color: #555;
+    margin-top: 5px;
+}
 
-    .katalog-card:hover .katalog-desc {
-        height: auto;
-        background-color: #f9f9f9;
-        padding: 8px;
-        border-radius: 8px;
-        margin-top: 10px;
-    }
+.katalog-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-top: 1px solid #f0f0f0;
+}
 
-    .katalog-stock {
-        font-size: 13px;
-        color: #555;
-        margin-top: 5px;
-    }
+.harga {
+    font-weight: bold;
+    color: #198754;
+    font-size: 16px;
+}
 
-    .katalog-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px;
-        border-top: 1px solid #f0f0f0;
-    }
+.btn-cart {
+    background-color: #fff;
+    color: #198754;
+    border: 2px solid #198754;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: 0.3s;
+}
 
-    .harga {
-        font-weight: bold;
-        color: #198754;
-        font-size: 16px;
-    }
+.btn-cart:hover {
+    background-color: #198754;
+    color: white;
+}
 
-    .btn-cart {
-        background-color: #fff;
-        color: #198754;
-        border: 2px solid #198754;
-        border-radius: 20px;
-        padding: 6px 14px;
-        font-weight: bold;
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        transition: 0.3s;
-    }
-
-    .btn-cart:hover {
-        background-color: #198754;
-        color: white;
-    }
-
-    .btn-cart i {
-        font-size: 16px;
-    }
+.btn-cart i {
+    font-size: 16px;
+}
 </style>
- {{-- KATALOG --}}
-        <div id="katalog" class="katalog-container">
-            @forelse ($barangs as $barang)
-                <div class="katalog-card position-relative">
 
-                    {{-- Badge kategori --}}
-                    <div class="badge">{{ $barang->kategori->nama_kategori ?? 'Tidak ada kategori' }}</div>
+{{-- KATALOG --}}
+<div id="katalog" class="katalog-container">
+    @forelse ($barangs->take(6) as $barang) {{-- hanya ambil 6 produk --}}
+        <div class="katalog-card position-relative">
 
-                    {{-- Gambar barang --}}
-                    @php
-                        $gambar = $barang->gambar
-                            ? (Str::startsWith($barang->gambar, ['http', 'assets/'])
-                                ? asset($barang->gambar)
-                                : asset('storage/' . $barang->gambar))
-                            : 'https://via.placeholder.com/300x180?text=No+Image';
-                    @endphp
-                    <img src="{{ $gambar }}" alt="{{ $barang->nama_barang }}">
+            {{-- Badge kategori --}}
+            <div class="badge">{{ $barang->kategori->nama_kategori ?? 'Tidak ada kategori' }}</div>
 
-                    {{-- Body --}}
-                    <div class="katalog-body">
-                        <div class="katalog-title">{{ $barang->nama_barang }}</div>
-                        <div class="katalog-desc">{{ $barang->deskripsi }}</div>
-                        <div class="text-muted mt-1" style="font-size:12px;">
-                            Stok: {{ $barang->stok }}
-                        </div>
-                    </div>
+            {{-- Gambar barang --}}
+            @php
+                $gambar = $barang->gambar
+                    ? (Str::startsWith($barang->gambar, ['http', 'assets/'])
+                        ? asset($barang->gambar)
+                        : asset('storage/' . $barang->gambar))
+                    : 'https://via.placeholder.com/300x180?text=No+Image';
+            @endphp
+            <img src="{{ $gambar }}" alt="{{ $barang->nama_barang }}">
 
-                    {{-- Footer --}}
-                    <div class="katalog-footer">
-                        <div class="harga">Rp {{ number_format($barang->harga, 0, ',', '.') }}</div>
-                        <a href="{{ route('produk.show', $barang->id) }}" class="btn-cart">Lihat Detail</a>
-                        <form action="{{ route('keranjang.tambah', $barang->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            <button type="submit" class="btn-cart">
-                                <i class="fas fa-cart-plus"></i>
-                            </button>
-                        </form>
-                    </div>
-
+            {{-- Body --}}
+            <div class="katalog-body">
+                <div class="katalog-title">{{ $barang->nama_barang }}</div>
+                <div class="katalog-desc">{{ $barang->deskripsi }}</div>
+                <div class="text-muted mt-1" style="font-size:12px;">
+                    Stok: {{ $barang->stok }}
                 </div>
-            @empty
-                <p class="text-muted">Barang tidak ditemukan.</p>
-            @endforelse
+            </div>
+
+            {{-- Footer --}}
+            <div class="katalog-footer">
+                <div class="harga">Rp {{ number_format($barang->harga, 0, ',', '.') }}</div>
+                <a href="{{ route('produk.show', $barang->id) }}" class="btn-cart">Lihat Detail</a>
+                <form action="{{ route('keranjang.tambah', $barang->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    <button type="submit" class="btn-cart">
+                        <i class="fas fa-cart-plus"></i>
+                    </button>
+                </form>
+            </div>
+
         </div>
+    @empty
+        <p class="text-muted">Barang tidak ditemukan.</p>
+    @endforelse
+</div>
+
 
  {{-- Tombol Lihat Semua --}}
         <div class="text-center mt-3">

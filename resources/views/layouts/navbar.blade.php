@@ -15,18 +15,20 @@
             </div>
             <div class="container px-0">
                 <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                    <a href="{{ route('home') }}" class="navbar-brand"><h1 class="text-primary display-6">Skincare Dua Naga</h1></a>
-                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                        <span class="fa fa-bars text-primary"></span>
-                    </button>
-                    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
-                        <div class="navbar-nav mx-auto">
-                            <a href="{{ url('katalog') }}" class="nav-item nav-link active">Home</a>
-                            <a href="{{ route('katalog.shop') }}" class="nav-item nav-link">Shop</a>
-                            <a href="shop-detail.html" class="nav-item nav-link">Pesanan Saya</a>
-                            <a href="{{ route('keranjang.katalog') }}" class="nav-item nav-link">Keranjang</a>
-                            <a href="contact.html" class="nav-item nav-link">Contact</a>
-                        </div>
+    <a href="{{ route('home') }}" class="navbar-brand">
+        <h1 class="text-primary display-6">Skincare Dua Naga</h1>
+    </a>
+    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="fa fa-bars text-primary"></span>
+    </button>
+    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
+        <div class="navbar-nav mx-auto">
+            <a href="{{ url('katalog') }}" class="nav-item nav-link {{ Request::is('katalog') ? 'text-success' : '' }}">Home</a>
+            <a href="{{ route('katalog.shop') }}" class="nav-item nav-link {{ Request::is('katalog/shop*') ? 'text-success' : '' }}">Shop</a>
+            <a href="" class="nav-item nav-link {{ Request::is('pesanan') ? 'text-success' : '' }}">Pesanan Saya</a>
+            <a href="{{ route('keranjang.katalog') }}" class="nav-item nav-link {{ Request::is('keranjang*') ? 'text-success' : '' }}">Keranjang</a>
+            <a href="{{ url('contact') }}" class="nav-item nav-link {{ Request::is('contact') ? 'text-success' : '' }}">Contact</a>
+        </div>
                         <div class="d-flex m-3 me-0">
     <a href="{{ route('keranjang.katalog') }}" class="position-relative me-4 my-auto">
         <i class="fa fa-shopping-bag fa-2x"></i>
