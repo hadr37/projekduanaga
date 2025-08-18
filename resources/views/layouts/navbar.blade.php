@@ -1,55 +1,60 @@
-<!-- Navbar Start -->
-<div class="container-fluid fixed-top">
-    <div class="container topbar bg-primary d-none d-lg-block">
-        <div class="d-flex justify-content-between">
-            <div class="top-info ps-2">
-                <small class="me-3">
-                    <i class="fas fa-map-marker-alt me-2 text-secondary"></i>
-                    <a href="#" class="text-white">Kec. Gatak, Kab. Sukoharjo, Jawa Tengah</a>
-                </small>
-                <small class="me-3">
-                    <i class="fas fa-envelope me-2 text-secondary"></i>
-                    <a href="#" class="text-white">marketing@duanaga.co.id</a>
-                </small>
-            </div>
-            <div class="top-link pe-2">
-                <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
-                <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
-            </div>
-        </div>
-    </div>
-    <div class="container px-0">
-        <nav class="navbar navbar-light bg-white navbar-expand-xl">
-            <a href="{{ url('/') }}" class="navbar-brand">
-                <h1 class="text-primary display-6">Skincare Dua Naga</h1>
-            </a>
-            <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="fa fa-bars text-primary"></span>
-            </button>
-            <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
-                <div class="navbar-nav mx-auto">
-                    <a href="{{ route('home') }}" class="nav-item nav-link">Home</a>
-                    <a href="{{ route('katalog.shop') }}" class="nav-item nav-link">Shop</a>
-                    <a href="#" class="nav-item nav-link">Detail Pesanan</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                            <a href="{{ route('keranjang.index') }}" class="dropdown-item">Keranjang</a>
-                            <a href="#" class="dropdown-item">Detail Pesanan</a>
-                            <a href="#" class="dropdown-item">Testimonial</a>
-                        </div>
+  <!-- Navbar start -->
+        <div class="container-fluid fixed-top">
+            <div class="container topbar bg-primary d-none d-lg-block">
+                <div class="d-flex justify-content-between">
+                    <div class="top-info ps-2">
+                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">Kec. Gatak, Kab. Sukoharjo, Jawa Tengah</a></small>
+                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">marketing@duanaga.co.id</a></small>
                     </div>
-                    <a href="#" class="nav-item nav-link">Contact</a>
+                    <div class="top-link pe-2">
+                        <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
+                        <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
+                        <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
+                    </div>
                 </div>
-                <div class="d-flex m-3 me-0">
-                    <a href="#" class="position-relative me-4 my-auto">
-                        <i class="fa fa-shopping-bag fa-2x"></i>
-                        <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
-                              style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
-                    <div class="dropdown my-auto">
-    <a class="btn btn-light dropdown-toggle d-flex align-items-center" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="fas fa-user fa-2x me-2"></i>
+            </div>
+            <div class="container px-0">
+                <nav class="navbar navbar-light bg-white navbar-expand-xl">
+                    <a href="{{ route('home') }}" class="navbar-brand"><h1 class="text-primary display-6">Skincare Dua Naga</h1></a>
+                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-primary"></span>
+                    </button>
+                    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto">
+                            <a href="{{ url('katalog') }}" class="nav-item nav-link active">Home</a>
+                            <a href="{{ route('katalog.shop') }}" class="nav-item nav-link">Shop</a>
+                            <a href="shop-detail.html" class="nav-item nav-link">Pesanan Saya</a>
+                            <a href="{{ route('keranjang.katalog') }}" class="nav-item nav-link">Keranjang</a>
+                            <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        </div>
+                        <div class="d-flex m-3 me-0">
+    <a href="{{ route('keranjang.katalog') }}" class="position-relative me-4 my-auto">
+        <i class="fa fa-shopping-bag fa-2x"></i>
+
+        @php
+            // Ambil total item di keranjang
+            $totalKeranjang = session('keranjang') ? collect(session('keranjang'))->sum('jumlah') : 0;
+        @endphp
+
+        @if($totalKeranjang > 0)
+        <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" 
+              style="top: -5px; left: 15px; height: 20px; min-width: 20px;">
+            {{ $totalKeranjang }}
+        </span>
+        @endif
+    </a>
+
+    <div class="dropdown my-auto">
+        <a class="btn btn-light dropdown-toggle d-flex align-items-center" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-user fa-2x me-2"></i> 
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            {{-- <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li> --}}
+            <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+        </ul>
+    </div>
+</div>
+
         @if(Auth::check())
             {{ Auth::user()->name }}
         @else
@@ -72,9 +77,9 @@
     </ul>
 </div>
 
-                </div>
+                        </div>
+                    </div>
+                </nav>
             </div>
-        </nav>
-    </div>
-</div>
-<!-- Navbar End -->
+        </div>
+        <!-- Navbar End -->

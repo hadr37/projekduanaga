@@ -98,6 +98,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('users', UserController::class);
 });
 Route::get('/admin/dashboard', [BarangController::class, 'dashboard'])->name('admin.dashboard');
-
-
+Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.katalog');
+Route::post('/keranjang/update/{id}', [KeranjangController::class, 'update'])->name('keranjang.update');
+Route::delete('/keranjang/delete/{id}', [KeranjangController::class, 'destroy'])->name('keranjang.destroy');
+Route::post('/keranjang/tambah/{id}', [KeranjangController::class, 'tambah'])->name('keranjang.tambah');
 

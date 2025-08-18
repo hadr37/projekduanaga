@@ -8,64 +8,61 @@ use App\Models\Barang;
 class KeranjangController extends Controller
 {
     public function index()
-    {
-        $keranjang = session()->get('keranjang', []);
-        return view('keranjang.index', compact('keranjang'));
+{
+    $keranjang = session()->get('keranjang', []);
+    $total = array_sum(array_map(fn($item) => $item['harga'] * $item['jumlah'], $keranjang));
+
+    return view('keranjang.katalog', compact('keranjang', 'total'));
+}
+
+public function tambah(Request $request, $id)
+{
+    $barang = Barang::findOrFail($id);
+    $keranjang = session()->get('keranjang', []);
+
+    if(isset($keranjang[$id])){
+        $keranjang[$id]['jumlah']++;
+    } else {
+        $keranjang[$id] = [
+            'nama' => $barang->nama_barang,
+            'harga' => $barang->harga,
+            'jumlah' => 1,
+            'stok' => $barang->stok,
+            'gambar' => $barang->gambar,
+        ];
     }
 
-    public function tambah(Request $request)
-    {
-        $barang = Barang::findOrFail($request->barang_id);
+    session()->put('keranjang', $keranjang);
+    return redirect()->route('keranjang.katalog')->with('success', 'Barang ditambahkan ke keranjang.');
+}
 
-        $cart = session()->get('keranjang', []);
+public function update(Request $request, $id)
+{
+    $keranjang = session()->get('keranjang', []);
 
-        if (isset($cart[$barang->id])) {
-            $cart[$barang->id]['jumlah']++;
-        } else {
-            $cart[$barang->id] = [
-                "nama" => $barang->nama_barang,
-                "harga" => $barang->harga,
-                "gambar" => $barang->gambar,
-                "jumlah" => 1,
-                "stok" => $barang->stok,
-            ];
-        }
-
-        session()->put('keranjang', $cart);
-
-        return redirect()->back()->with('success', 'Produk berhasil ditambahkan ke keranjang!');
+    if(isset($keranjang[$id])){
+        $keranjang[$id]['jumlah'] = $request->jumlah;
+        session()->put('keranjang', $keranjang);
     }
 
-    public function checkout(Request $request)
-    {
-        $keranjang = session()->get('keranjang', []);
-        $metode = $request->input('metode');
-        $nomor = $request->input('nomor');
+    return redirect()->route('keranjang.katalog');
+}
 
-        foreach ($keranjang as $id => $item) {
-            $barang = Barang::find($id);
-            if ($barang) {
-                $barang->stok -= $item['jumlah'];
-                $barang->save();
-            }
-        }
-
-        session()->forget('keranjang');
-
-    
-        $request->validate([
-        'metode_pembayaran' => 'required|string',
-        'nomor_pembayaran' => 'required|string|min:5',
-    ]);
-
-    // Simulasi penyimpanan atau proses pembayaran...
-
-    // Setelah selesai, kosongkan keranjang
-    //Keranjang::truncate(); // Atau hanya milik user tertentu jika ada autentikasi
-
-    return redirect()->route('keranjang.index')->with('success', 'Checkout berhasil!');
+public function destroy($id)
+{
+    $keranjang = session()->get('keranjang', []);
+    if(isset($keranjang[$id])){
+        unset($keranjang[$id]);
     }
+    session()->put('keranjang', $keranjang);
 
+    return redirect()->route('keranjang.katalog');
+}
 
+public function checkout()
+{
+    session()->forget('keranjang');
+    return redirect()->route('keranjang.katalog')->with('success', 'Checkout berhasil!');
+}
 
 }

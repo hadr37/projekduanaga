@@ -77,24 +77,38 @@
                         <div class="navbar-nav mx-auto">
                             <a href="{{ url('katalog') }}" class="nav-item nav-link active">Home</a>
                             <a href="{{ route('katalog.shop') }}" class="nav-item nav-link">Shop</a>
-                            <a href="shop-detail.html" class="nav-item nav-link">Detail Pesanan</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                                <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <a href="cart.html" class="dropdown-item">Keranjang</a>
-                                    <a href="chackout.html" class="dropdown-item">Detail Pesanan</a>
-                                    <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                </div>
-                            </div>
+                            <a href="shop-detail.html" class="nav-item nav-link">Pesanan Saya</a>
+                            <a href="{{ route('keranjang.katalog') }}" class="nav-item nav-link">Keranjang</a>
                             <a href="contact.html" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="d-flex m-3 me-0">
-                            <a href="#" class="position-relative me-4 my-auto">
-                                <i class="fa fa-shopping-bag fa-2x"></i>
-                                <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
-                            <div class="dropdown my-auto">
-    <a class="btn btn-light dropdown-toggle d-flex align-items-center" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="fas fa-user fa-2x me-2"></i>
+    <a href="{{ route('keranjang.katalog') }}" class="position-relative me-4 my-auto">
+        <i class="fa fa-shopping-bag fa-2x"></i>
+
+        @php
+            // Ambil total item di keranjang
+            $totalKeranjang = session('keranjang') ? collect(session('keranjang'))->sum('jumlah') : 0;
+        @endphp
+
+        @if($totalKeranjang > 0)
+        <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" 
+              style="top: -5px; left: 15px; height: 20px; min-width: 20px;">
+            {{ $totalKeranjang }}
+        </span>
+        @endif
+    </a>
+
+    <div class="dropdown my-auto">
+        <a class="btn btn-light dropdown-toggle d-flex align-items-center" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-user fa-2x me-2"></i> 
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            {{-- <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li> --}}
+            <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+        </ul>
+    </div>
+</div>
+
         @if(Auth::check())
             {{ Auth::user()->name }}
         @else
@@ -390,44 +404,50 @@
         font-size: 16px;
     }
 </style>
-<div id="katalog">
-    <div class="katalog-container">
-        @foreach ($barangs->take(6) as $barang)
-            <div class="katalog-card">
-                
-                {{-- Badge kategori --}}
-                <div class="badge">{{ $barang->kategori->nama_kategori ?? 'Tidak ada kategori' }}</div>
+ {{-- KATALOG --}}
+        <div id="katalog" class="katalog-container">
+            @forelse ($barangs as $barang)
+                <div class="katalog-card position-relative">
 
-{{-- Gambar barang --}}
-@php
-    $gambar = $barang->gambar
-        ? (Str::startsWith($barang->gambar, ['http', 'assets/'])
-            ? asset($barang->gambar) // Seeder (public path) atau URL langsung
-            : asset('storage/' . $barang->gambar)) // Upload manual
-        : 'https://via.placeholder.com/300x180?text=No+Image';
-@endphp
-<img src="{{ $gambar }}" alt="{{ $barang->nama_barang }}">
+                    {{-- Badge kategori --}}
+                    <div class="badge">{{ $barang->kategori->nama_kategori ?? 'Tidak ada kategori' }}</div>
 
-                {{-- Body katalog --}}
-                <div class="katalog-body">
-                    <div class="katalog-title">{{ $barang->nama_barang }}</div>
-                    <div class="katalog-desc">{{ $barang->deskripsi }}</div>
-                    <div class="katalog-stock">Stok: {{ $barang->stok }}</div>
-                </div>
+                    {{-- Gambar barang --}}
+                    @php
+                        $gambar = $barang->gambar
+                            ? (Str::startsWith($barang->gambar, ['http', 'assets/'])
+                                ? asset($barang->gambar)
+                                : asset('storage/' . $barang->gambar))
+                            : 'https://via.placeholder.com/300x180?text=No+Image';
+                    @endphp
+                    <img src="{{ $gambar }}" alt="{{ $barang->nama_barang }}">
 
-                {{-- Footer katalog --}}
-                <div class="katalog-footer">
-                    <div class="harga">
-                        Rp {{ number_format($barang->harga, 0, ',', '.') }}
+                    {{-- Body --}}
+                    <div class="katalog-body">
+                        <div class="katalog-title">{{ $barang->nama_barang }}</div>
+                        <div class="katalog-desc">{{ $barang->deskripsi }}</div>
+                        <div class="text-muted mt-1" style="font-size:12px;">
+                            Stok: {{ $barang->stok }}
+                        </div>
                     </div>
-                    <button class="btn-cart">
-                        <i class="fas fa-shopping-cart"></i> Beli
-                    </button>
+
+                    {{-- Footer --}}
+                    <div class="katalog-footer">
+                        <div class="harga">Rp {{ number_format($barang->harga, 0, ',', '.') }}</div>
+                        <a href="{{ route('produk.show', $barang->id) }}" class="btn-cart">Lihat Detail</a>
+                        <form action="{{ route('keranjang.tambah', $barang->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            <button type="submit" class="btn-cart">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </form>
+                    </div>
+
                 </div>
-            </div>
-        @endforeach
-    </div>
-</div>
+            @empty
+                <p class="text-muted">Barang tidak ditemukan.</p>
+            @endforelse
+        </div>
 
  {{-- Tombol Lihat Semua --}}
         <div class="text-center mt-3">
