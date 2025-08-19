@@ -21,7 +21,7 @@
     </button>
     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
         <div class="navbar-nav mx-auto">
-            <a href="{{ url('katalog') }}" class="nav-item nav-link {{ Request::is('katalog') ? 'text-success' : '' }}">Home</a>
+            <a href="{{ url('/') }}" class="nav-item nav-link {{ Request::is('katalog') ? 'text-success' : '' }}">Home</a>
             <a href="{{ route('katalog.shop') }}" class="nav-item nav-link {{ Request::is('katalog/shop*') ? 'text-success' : '' }}">Shop</a>
             @auth 
             <a href="" class="nav-item nav-link {{ Request::is('pesanan') ? 'text-success' : '' }}">Pesanan Saya</a>

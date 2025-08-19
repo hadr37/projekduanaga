@@ -157,15 +157,6 @@
                 </div>
 
                 <div class="col-md-2">
-                    <h6 class="fw-bold">Kategori Populer</h6>
-                    <ul class="list-unstyled small">
-                        <li>Sunscreen</li>
-                        <li>Face Care</li>
-                        <li>Body Care</li>
-                    </ul>
-                </div>
-
-                <div class="col-md-2">
                     <h6 class="fw-bold">Pabrik</h6>
                     <ul class="list-unstyled small">
                         <li>Pabrikan</li>
