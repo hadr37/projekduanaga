@@ -77,7 +77,7 @@
                 <!-- Form Hubungi Kami -->
                 <div class="card shadow-sm mb-4">
                     <div class="card-body">
-                        <h4 class="text-success mb-3">Hubungi Kami</h4>
+                        <h3 class="text-success mb-3">Kirimkan pesan kepada kami di bawah dan kami akan menghubungi Anda sesegera mungkin!</h3>
                         <form>
                             <div class="mb-3">
                                 <label for="nama" class="form-label">Nama</label>
@@ -100,6 +100,7 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h5 class="text-success mb-3">Nomor Marketing</h5>
+                        <p>Kami akan senang untuk berbicara dengan Anda. Jangan ragu untuk menghubungi kami melalui link di bawah ini.</p>
                         <ul class="list-unstyled">
                             <li>📞 0812-3456-7890 (Marketing A)</li>
                             <li>📞 0813-9876-5432 (Marketing B)</li>
