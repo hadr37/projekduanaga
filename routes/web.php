@@ -4,6 +4,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\KategoriController;
 use Illuminate\Support\Facades\Route;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 Route::get('/', function () {
-    return view('layouts.fruitables'); // Halaman utama
+    return view('home.index'); // Halaman utama
 })->name('home');
 
 /*
@@ -27,7 +28,7 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Register Admin
 Route::get('/register/admin', [AuthController::class, 'showRegisterAdmin'])->name('register.admin');
@@ -40,7 +41,7 @@ Route::post('/register/admin', [AuthController::class, 'registerAdmin']);
 */
 Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
-        return view('admin.dashboard'); // Buat file resources/views/admin/dashboard.blade.php
+        return view('admin.dashboard');
     })->name('admin.dashboard');
 
     // CRUD Users
@@ -73,7 +74,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 
     // Dashboard User
     Route::get('/user/dashboard', function () {
-        return view('layouts.fruitables');
+        return view('home.index');
     })->name('user.katalog');
 });
 
@@ -103,3 +104,4 @@ Route::post('/keranjang/update/{id}', [KeranjangController::class, 'update'])->n
 Route::delete('/keranjang/delete/{id}', [KeranjangController::class, 'destroy'])->name('keranjang.destroy');
 Route::post('/keranjang/tambah/{id}', [KeranjangController::class, 'tambah'])->name('keranjang.tambah');
 
+Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');

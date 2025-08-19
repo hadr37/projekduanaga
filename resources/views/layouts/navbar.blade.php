@@ -14,10 +14,8 @@
                 </div>
             </div>
             <div class="container px-0">
-                <nav class="navbar navbar-light bg-white navbar-expand-xl">
-    <a href="{{ route('home') }}" class="navbar-brand">
-        <h1 class="text-primary display-6">Skincare Dua Naga</h1>
-    </a>
+    <nav class="navbar navbar-light bg-white navbar-expand-xl">
+    <a href="{{ route('home') }}" class="navbar-brand"><h1 class="text-primary display-6">Skincare Dua Naga</h1></a>
     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
         <span class="fa fa-bars text-primary"></span>
     </button>
@@ -25,58 +23,49 @@
         <div class="navbar-nav mx-auto">
             <a href="{{ url('katalog') }}" class="nav-item nav-link {{ Request::is('katalog') ? 'text-success' : '' }}">Home</a>
             <a href="{{ route('katalog.shop') }}" class="nav-item nav-link {{ Request::is('katalog/shop*') ? 'text-success' : '' }}">Shop</a>
+            @auth 
             <a href="" class="nav-item nav-link {{ Request::is('pesanan') ? 'text-success' : '' }}">Pesanan Saya</a>
             <a href="{{ route('keranjang.katalog') }}" class="nav-item nav-link {{ Request::is('keranjang*') ? 'text-success' : '' }}">Keranjang</a>
-            <a href="{{ url('contact') }}" class="nav-item nav-link {{ Request::is('contact') ? 'text-success' : '' }}">Contact</a>
-        </div>
-                        <div class="d-flex m-3 me-0">
+            @endauth
+            <a href="{{ route('contact.index') }}" class="nav-item nav-link {{ Request::is('contact') ? 'text-success' : '' }}">Contact</a>
+        </div>  
+        <div class="d-flex m-3 me-0">
+     @auth
+    @php
+        $totalKeranjang = \App\Models\Card::where('user_id', Auth::id())->sum('jumlah');
+    @endphp
     <a href="{{ route('keranjang.katalog') }}" class="position-relative me-4 my-auto">
         <i class="fa fa-shopping-bag fa-2x"></i>
-
-        @php
-            // Ambil total item di keranjang
-            $totalKeranjang = session('keranjang') ? collect(session('keranjang'))->sum('jumlah') : 0;
-        @endphp
-
         @if($totalKeranjang > 0)
-        <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" 
-              style="top: -5px; left: 15px; height: 20px; min-width: 20px;">
-            {{ $totalKeranjang }}
-        </span>
+            <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" 
+                  style="top: -5px; left: 15px; height: 20px; min-width: 20px;">
+                {{ $totalKeranjang }}
+            </span>
         @endif
     </a>
+@endauth
 
     <div class="dropdown my-auto">
         <a class="btn btn-light dropdown-toggle d-flex align-items-center" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fas fa-user fa-2x me-2"></i> 
         </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            {{-- <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li> --}}
+            @guest
+            <li><a class="dropdown-item" href="{{ route('login') }}">Login</a></li>
+            <li><a class="dropdown-item" href="{{ route('register') }}">Register </a></li>
+                @else
             <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+
+            @endguest
         </ul>
     </div>
 </div>
 
         @if(Auth::check())
             {{ Auth::user()->name }}
-        @else
-            Akun
-        @endif
+@endif
     </a>
-
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
-        @if(Auth::check())
-            <li>
-                <form action="{{ route('logout') }}" method="POST" class="px-3 py-1">
-                    @csrf
-                    <button type="submit" class="btn btn-danger w-100">Logout</button>
-                </form>
-            </li>
-        @else
-            <li><a class="dropdown-item" href="{{ route('login') }}">Login</a></li>
-            <li><a class="dropdown-item" href="{{ route('register') }}">Register</a></li>
-        @endif
-    </ul>
+            
 </div>
 
                         </div>

@@ -14,7 +14,7 @@ class AuthController extends Controller
      */
     public function showLogin()
     {
-        return view('auth.login');
+        return view ('auth.login');
     }
 
     /**
@@ -89,7 +89,7 @@ class AuthController extends Controller
             if ($user->role === 'admin') {
                 return redirect()->route('admin.dashboard');
             } elseif ($user->role === 'user') {
-                 return view('layouts.fruitables');
+                 return view('home.index');
             } else {
                 Auth::logout();
                 return back()->with('error', 'Role tidak dikenali.');
@@ -105,6 +105,6 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('login');
+        return redirect()->route('home');
     }
 }

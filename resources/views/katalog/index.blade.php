@@ -1,4 +1,4 @@
-@extends('layouts.fruitables')
+@extends('home.index')
 
 @section('content')
 <!-- Product Section Start -->

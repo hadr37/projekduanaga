@@ -191,12 +191,14 @@
                     <div class="katalog-footer">
                         <div class="harga">Rp {{ number_format($barang->harga, 0, ',', '.') }}</div>
                         <a href="{{ route('produk.show', $barang->id) }}" class="btn-cart">Lihat Detail</a>
+                        @auth
                         <form action="{{ route('keranjang.tambah', $barang->id) }}" method="POST" style="display:inline;">
                             @csrf
                             <button type="submit" class="btn-cart">
                                 <i class="fas fa-cart-plus"></i>
                             </button>
                         </form>
+                         @endauth
                     </div>
 
                 </div>
