@@ -33,10 +33,10 @@ class User extends Authenticatable
     /**
      * AdminLTE: URL ke halaman profil
      */
-    public function getProfileUrlAttribute()
-    {
-        return route('profile'); // pastikan route profile ada
-    }
+    // public function getProfileUrlAttribute()
+    // {
+    //     return route('profile'); // pastikan route profile ada
+    // }
 
     /**
      * AdminLTE: Deskripsi di bawah nama user
@@ -54,4 +54,10 @@ class User extends Authenticatable
         // Bisa ganti dengan path foto dari database kalau ada
         return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=0D8ABC&color=fff';
     }
+
+    public function alamatUsers()
+{
+    return $this->hasMany(AlamatUser::class);
+}
+
 }

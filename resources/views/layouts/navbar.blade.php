@@ -1,7 +1,7 @@
   <!-- Navbar start -->
         <div class="container-fluid fixed-top">
-            <div class="container topbar bg-primary d-none d-lg-block">
-                <div class="d-flex justify-content-between">
+            <div class="topbar bg-primary d-none d-lg-block px-0">
+                <div class="d-flex justify-content-between px-3">
                     <div class="top-info ps-2">
                         <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">Kec. Gatak, Kab. Sukoharjo, Jawa Tengah</a></small>
                         <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">marketing@duanaga.co.id</a></small>
@@ -12,8 +12,8 @@
                         <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
                     </div>
                 </div>
-            </div>
-            <div class="container px-0">
+         </div>
+     <div class="container px-0">
     <nav class="navbar navbar-light bg-white navbar-expand-xl">
     <a href="{{ route('home') }}" class="navbar-brand"><h1 class="text-primary display-6">Skincare Dua Naga</h1></a>
     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -55,6 +55,7 @@
             <li><a class="dropdown-item" href="{{ route('register') }}">Register </a></li>
                 @else
             <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+            <li><a class="dropdown-item" href="{{ route('profile.index') }}">Profile</a></li>
 
             @endguest
         </ul>
@@ -68,9 +69,9 @@
             
 </div>
 
-                        </div>
-                    </div>
-                </nav>
-            </div>
-        </div>
+ </div>
+</div>
+</nav>
+ </div>
+</div>
         <!-- Navbar End -->

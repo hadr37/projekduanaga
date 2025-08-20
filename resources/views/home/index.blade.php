@@ -206,8 +206,8 @@
 <style>
 .katalog-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 kolom */
-    gap: 20px;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 35px;
     padding: 20px;
     font-family: 'Segoe UI', sans-serif;
 }
@@ -322,12 +322,9 @@
             {{-- Footer --}}
             <div class="katalog-footer">
                 <div class="harga">Rp {{ number_format($barang->harga, 0, ',', '.') }}</div>
-                <a href="{{ route('produk.show', $barang->id) }}" class="btn-cart">Lihat Detail</a>
                 <form action="{{ route('keranjang.tambah', $barang->id) }}" method="POST" style="display:inline;">
                     @csrf
-                    <button type="submit" class="btn-cart">
-                        <i class="fas fa-cart-plus"></i>
-                    </button>
+                <a href="{{ route('produk.show', $barang->id) }}" class="btn-cart">Lihat Detail</a>
                 </form>
             </div>
 
@@ -626,7 +623,7 @@
 
 <!-- Footer -->
 <footer class="bg-dark text-white pt-5 mt-5 w-100">
-    <div class="container-fluid px-5"> 
+    <div class="container-fluid px-5">
         <div class="row g-4">
             <div class="col-md-4">
                 <h5 class="fw-bold">PT. DUA NAGA KOSMETINDO</h5>
@@ -672,6 +669,7 @@
         </div>
     </div>
 </footer>
+
 
 
         <!-- Copyright Start -->

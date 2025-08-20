@@ -19,7 +19,6 @@
 
     <style>
         body { padding-top: 90px; }
-
         .katalog-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -42,15 +41,17 @@
 
         .katalog-card img {
             width: 100%;
-            height: 140px;
-            object-fit: contain;
+            height: 200px;
+            aspect-ratio: 1;
+            object-fit: cover;
             background-color: #f9f9f9;
         }
 
-        .katalog-body { padding: 10px; }
+        .katalog-body { padding: 20px; }
 
         .katalog-title {
-            font-size: 14px;
+            font-size: 18px;
+            margin-bottom: 10px;
             font-weight: 600;
         }
 
