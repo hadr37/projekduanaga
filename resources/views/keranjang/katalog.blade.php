@@ -18,8 +18,15 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
     <style>
+
+        .container-fluid.fixed-top {
+        border-radius: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: var(--bs-primary, #0d6efd) !important; /* fallback ke biru */
+    }
         body {
-            padding-top: 130px; /* Sesuaikan jika navbar lebih tinggi */
+            padding-top: 150px; /* Sesuaikan jika navbar lebih tinggi */
         }
         .btn-cart, .btn-outline-primary, .btn-outline-danger {
             border-radius: 20px;

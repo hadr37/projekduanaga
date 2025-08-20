@@ -18,7 +18,13 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
     <style>
-        body { padding-top: 90px; }
+        .container-fluid.fixed-top {
+        border-radius: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: var(--bs-primary, #0d6efd) !important; /* fallback ke biru */
+    }
+        body { padding-top: 140px; }
         .katalog-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -191,7 +197,7 @@
                     {{-- Footer --}}
                     <div class="katalog-footer">
                         <div class="harga">Rp {{ number_format($barang->harga, 0, ',', '.') }}</div>
-                        <a href="{{ route('produk.show', $barang->id) }}" class="btn-cart">Lihat Detail</a>
+                        <a href="{{ route('produk.show', $barang->id) }}" >Lihat Detail</a>
                         @auth
                         <form action="{{ route('keranjang.tambah', $barang->id) }}" method="POST" style="display:inline;">
                             @csrf

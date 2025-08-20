@@ -18,6 +18,12 @@
 </head>
 
 <style>
+    .container-fluid.fixed-top {
+        border-radius: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: var(--bs-primary, #0d6efd) !important; /* fallback ke biru */
+    }
     body {
         padding-top: 130px; 
     }
