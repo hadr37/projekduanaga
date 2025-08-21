@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController;
@@ -116,3 +117,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile/{id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/profile/{id}/set-default', [ProfileController::class, 'setDefault']) ->name('profile.setDefault');
 });
+
+Route::get('/katalog/checkout', [KeranjangController::class, 'checkout'])->name('katalog.checkout');
+Route::get('/checkout', [CheckoutController::class, 'show'])->name('katalog.checkout');
+Route::post('/checkout/proses', [CheckoutController::class, 'proses'])->name('katalog.checkout.proses');
+

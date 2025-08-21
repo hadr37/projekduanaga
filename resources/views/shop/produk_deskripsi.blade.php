@@ -18,6 +18,12 @@
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
 
     <style>
+        .container-fluid.fixed-top {
+        border-radius: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: var(--bs-primary, #0d6efd) !important; /* fallback biru */
+    }
         body { 
             padding-top: 90px; 
             font-family: 'Open Sans', sans-serif; 

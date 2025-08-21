@@ -18,105 +18,134 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
     <style>
-        .container-fluid.fixed-top {
+    .container-fluid.fixed-top {
         border-radius: 0 !important;
         padding: 0 !important;
         margin: 0 !important;
-        background: var(--bs-primary, #0d6efd) !important; /* fallback ke biru */
+        background: var(--bs-primary, #0d6efd) !important; /* fallback biru */
     }
-        body { padding-top: 140px; }
-        .katalog-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            padding: 20px;
-        }
 
-        .katalog-card {
-            border: 1px solid #eee;
-            border-radius: 10px;
-            background: #fff;
-            overflow: hidden;
-            transition: 0.2s;
-        }
+    body { 
+        padding-top: 120px; 
+        background: #fafafa;
+    }
 
-        .katalog-card:hover {
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transform: translateY(-3px);
-        }
+    /* GRID */
+    .katalog-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        padding: 20px;
+        align-items: stretch; /* samakan tinggi */
+    }
 
-        .katalog-card img {
-            width: 100%;
-            height: 200px;
-            aspect-ratio: 1;
-            object-fit: cover;
-            background-color: #f9f9f9;
-        }
+    /* CARD */
+    .katalog-card {
+        border: 1px solid #eee;
+        border-radius: 12px;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: 0.2s;
+        height: 100%;
+        overflow: hidden;
+    }
 
-        .katalog-body { padding: 20px; }
+    .katalog-card:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transform: translateY(-3px);
+    }
 
-        .katalog-title {
-            font-size: 18px;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
+    /* GAMBAR */
+    .katalog-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        background-color: #f9f9f9;
+    }
 
-        .katalog-desc {
-            font-size: 12px;
-            color: #666;
-            height: 38px;
-            overflow: hidden;
-        }
+    /* BODY */
+    .katalog-body {
+        flex: 1;
+        padding: 16px 20px;
+        display: flex;
+        flex-direction: column;
+    }
 
-        .katalog-footer {
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid #f0f0f0;
-        }
+    .katalog-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        min-height: 40px; /* seragam judul */
+    }
 
-        .harga {
-            color: #198754;
-            font-weight: bold;
-            font-size: 14px;
-        }
+    .katalog-desc {
+        font-size: 13px;
+        color: #666;
+        flex-grow: 1;
+        overflow: hidden;
+        line-height: 1.4;
+        max-height: 38px; /* seragam deskripsi */
+        margin-bottom: 8px;
+    }
 
-        .btn-cart {
-            font-size: 13px;
-            padding: 5px 10px;
-            border: 1px solid #198754;
-            color: #198754;
-            background: white;
-            border-radius: 20px;
-            transition: 0.2s;
-            cursor: pointer;
-        }
+    .katalog-body .text-muted {
+        font-size: 12px;
+    }
 
-        .btn-cart:hover {
-            background: #198754;
-            color: white;
-        }
+    /* FOOTER */
+    .katalog-footer {
+        padding: 12px 16px;
+        border-top: 1px solid #f0f0f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-        .badge {
-            position: absolute;
-            background: #76c043;
-            color: white;
-            padding: 3px 8px;
-            font-size: 11px;
-            border-radius: 20px;
-            top: 8px;
-            right: 8px;
-        }
+    .harga {
+        color: #198754;
+        font-weight: bold;
+        font-size: 14px;
+    }
 
-        @media (max-width: 991px) {
-            .katalog-container { grid-template-columns: repeat(3, 1fr); }
-        }
+    .btn-cart {
+        font-size: 13px;
+        padding: 5px 10px;
+        border: 1px solid #198754;
+        color: #198754;
+        background: white;
+        border-radius: 20px;
+        transition: 0.2s;
+        cursor: pointer;
+    }
 
-        @media (max-width: 575px) {
-            .katalog-container { grid-template-columns: repeat(2, 1fr); }
-        }
-    </style>
+    .btn-cart:hover {
+        background: #198754;
+        color: white;
+    }
+
+    .badge {
+        position: absolute;
+        background: #76c043;
+        color: white;
+        padding: 3px 8px;
+        font-size: 11px;
+        border-radius: 20px;
+        top: 8px;
+        right: 8px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 991px) {
+        .katalog-container { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 575px) {
+        .katalog-container { grid-template-columns: repeat(1, 1fr); }
+    }
+</style>
+
 </head>
 <body>
 

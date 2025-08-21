@@ -12,15 +12,13 @@ class KeranjangController extends Controller
     public function index()
     {
         $userId = Auth::id();
-        // Ambil semua item keranjang milik user dengan relasi produk
         $keranjang = Card::with('product')->where('user_id', $userId)->get();
 
-        // Hitung total harga
         $total = $keranjang->reduce(function ($carry, $item) {
             return $carry + ($item->product->harga * $item->jumlah);
         }, 0);
 
-        return view('keranjang.katalog', compact('keranjang', 'total')); // Sesuaikan path view
+        return view('keranjang.katalog', compact('keranjang', 'total'));
     }
 
     public function tambah(Request $request, $id)
@@ -28,11 +26,9 @@ class KeranjangController extends Controller
         $userId = Auth::id();
         $barang = Barang::findOrFail($id);
 
-        // Cari apakah barang sudah ada di keranjang user ini
         $cartItem = Card::where('user_id', $userId)->where('product_id', $id)->first();
 
         if ($cartItem) {
-            // Update jumlah barang, jika stok memungkinkan
             if ($cartItem->jumlah < $barang->stok) {
                 $cartItem->increment('jumlah', 1);
                 return redirect()->route('keranjang.katalog')->with('success', 'Jumlah barang berhasil ditambah.');
@@ -40,7 +36,6 @@ class KeranjangController extends Controller
                 return redirect()->route('keranjang.katalog')->with('error', 'Stok barang tidak cukup.');
             }
         } else {
-            // Tambah barang baru ke keranjang
             if ($barang->stok > 0) {
                 Card::create([
                     'user_id' => $userId,
@@ -85,34 +80,24 @@ class KeranjangController extends Controller
         return redirect()->route('keranjang.katalog')->with('error', 'Barang tidak ditemukan di keranjang.');
     }
 
+    /**
+     * Menampilkan halaman checkout (bukan langsung proses).
+     */
     public function checkout()
     {
         $userId = Auth::id();
-        
-        // Ambil semua item keranjang untuk validasi stok
-        $keranjangItems = Card::with('product')->where('user_id', $userId)->get();
-        
-        if ($keranjangItems->isEmpty()) {
+        $keranjang = Card::with('product')->where('user_id', $userId)->get();
+
+        if ($keranjang->isEmpty()) {
             return redirect()->route('keranjang.katalog')->with('error', 'Keranjang kosong!');
         }
-        
-        // Validasi stok sebelum checkout
-        foreach ($keranjangItems as $item) {
-            if ($item->jumlah > $item->product->stok) {
-                return redirect()->route('keranjang.katalog')->with('error', 
-                    'Stok ' . $item->product->nama . ' tidak mencukupi (Tersedia: ' . $item->product->stok . ')');
-            }
-        }
-        
-        // Kurangi stok barang
-        foreach ($keranjangItems as $item) {
-            $barang = Barang::find($item->product_id);
-            $barang->decrement('stok', $item->jumlah);
-        }
-        
-        // Hapus semua item dari keranjang
-        Card::where('user_id', $userId)->delete();
 
-        return redirect()->route('keranjang.katalog')->with('success', 'Checkout berhasil! Terima kasih atas pembelian Anda.');
+        $total = $keranjang->reduce(function ($carry, $item) {
+            return $carry + ($item->product->harga * $item->jumlah);
+        }, 0);
+
+        return view('katalog.checkout', compact('keranjang', 'total'));
     }
+
+    
 }

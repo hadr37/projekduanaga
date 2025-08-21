@@ -55,9 +55,16 @@ class User extends Authenticatable
         return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=0D8ABC&color=fff';
     }
 
-    public function alamatUsers()
+// app/Models/User.php
+public function alamatUsers()
 {
-    return $this->hasMany(AlamatUser::class);
+    return $this->hasMany(AlamatUser::class, 'user_id');
 }
 
+public function alamatDefault()
+{
+    return $this->hasOne(AlamatUser::class, 'user_id')->where('is_default', 1);
 }
+}
+
+

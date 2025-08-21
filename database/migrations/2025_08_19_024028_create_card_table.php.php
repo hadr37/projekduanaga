@@ -11,12 +11,9 @@ return new class extends Migration
         Schema::create('cards', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->unsignedBigInteger('product_id'); 
-            $table->integer('jumlah');
+            $table->foreignId('product_id')->constrained('barangs')->onDelete('cascade');
+            $table->integer('jumlah')->default(1);
             $table->timestamps();
-            
-            // Foreign key manual untuk product_id ke tabel barangs
-            $table->foreign('product_id')->references('id')->on('barangs')->onDelete('cascade');
         });
     }
 

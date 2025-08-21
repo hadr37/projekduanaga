@@ -121,9 +121,9 @@
                     <div class="card-body">
                         <h4 class="text-success mb-3">Alamat & Jam Kerja</h4>
                         <p>
-                            📍 Jl. Contoh Alamat No. 123, Sukoharjo, Jawa Tengah  
-                            ⏰ Senin - Jumat: 08.00 - 17.00  
-                            📧 Email: info@duanaga.co.id
+                            📍 Dk. GAMBIRAN, Ds. Krajan, Kec. Gatak, Kab. Sukoharjo, Jawa Tengah, (57557)
+                            ⏰ Senin - Sabtu, 08:00 - 17:00 WIB  
+                            📧 Email: marketing@duanaga.co.id
                         </p>
                         <hr>
                         <h5>Lokasi Kami</h5>

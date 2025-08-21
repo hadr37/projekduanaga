@@ -481,18 +481,37 @@
 
 
 /*** Footer Start ***/
+.footer {
+    width: 100%; /* full lebar */
+    background-color: #1a1a1a; /* warna footer */
+    padding: 40px 0; /* jarak atas bawah */
+}
+
+/* Konten footer full kanan kiri */
+.footer .footer-item {
+    width: 100%;
+    margin: 0;
+    padding: 0 40px; /* beri sedikit ruang kiri kanan biar tidak nempel ke tepi */
+}
+
 .footer .footer-item .btn-link {
     line-height: 35px;
-    color: rgba(255, 255, 255, .5);
-    transition: 0.5s;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    transition: 0.3s;
 }
 
 .footer .footer-item .btn-link:hover {
-    color: var(--bs-secondary) !important;
+    color: var(--bs-secondary, #ffcc00); /* fallback kuning jika bootstrap tidak ada */
 }
 
 .footer .footer-item p.mb-4 {
     line-height: 35px;
+    color: #ccc;
+}
+
+.footer h5 {
+    margin-bottom: 15px;
 }
 /*** Footer End ***/
 

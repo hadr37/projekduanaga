@@ -190,10 +190,9 @@
                                 <span class="text-success">Rp {{ number_format($total, 0, ',', '.') }}</span>
                             </p>
 
-                            <form action="{{ route('keranjang.checkout') }}" method="POST">
+                            <form action="{{ route('katalog.checkout') }}" method="GET">
                                 @csrf
-                                <button type="submit" class="btn btn-success w-100 py-2" 
-                                        onclick="return confirm('Lanjutkan ke checkout?')">
+                                <button type="submit" class="btn btn-success w-100 py-2" >
                                     <i class="fas fa-credit-card me-2"></i>Checkout Sekarang
                                 </button>
                             </form>

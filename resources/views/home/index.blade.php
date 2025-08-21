@@ -204,99 +204,132 @@
 </script>
 
 <style>
-
-.container-fluid.fixed-top {
+    .container-fluid.fixed-top {
         border-radius: 0 !important;
         padding: 0 !important;
         margin: 0 !important;
-        background: var(--bs-primary, #0d6efd) !important; /* fallback ke biru */
+        background: var(--bs-primary, #0d6efd) !important; /* fallback biru */
     }
-.katalog-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 35px;
-    padding: 20px;
-    font-family: 'Segoe UI', sans-serif;
-}
 
-.katalog-card {
-    border: 1px solid #d0e9b5;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    overflow: hidden;
-    text-align: center;
-    background-color: #fff;
-    position: relative;
-}
+    body { 
+        padding-top: 5px; 
+        background: #fafafa;
+    }
 
-/* hover dihapus */
-.katalog-card img {
-    width: 100%;
-    height: 180px;
-    object-fit: contain;
-    background-color: #f9f9f9;
-}
+    /* GRID */
+    .katalog-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        padding: 20px;
+        align-items: stretch; /* samakan tinggi */
+    }
 
-.katalog-body {
-    padding: 15px;
-}
+    /* CARD */
+    .katalog-card {
+        border: 1px solid #eee;
+        border-radius: 12px;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: 0.2s;
+        height: 100%;
+        overflow: hidden;
+    }
 
-.katalog-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 5px;
-}
+    .katalog-card:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transform: translateY(-3px);
+    }
 
-.katalog-desc {
-    font-size: 13px;
-    color: #666;
-    height: 40px;
-    overflow: hidden;
-}
+    /* GAMBAR */
+    .katalog-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        background-color: #f9f9f9;
+    }
 
-.katalog-stock {
-    font-size: 13px;
-    color: #555;
-    margin-top: 5px;
-}
+    /* BODY */
+    .katalog-body {
+        flex: 1;
+        padding: 16px 20px;
+        display: flex;
+        flex-direction: column;
+    }
 
-.katalog-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    border-top: 1px solid #f0f0f0;
-}
+    .katalog-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        min-height: 40px; /* seragam judul */
+    }
 
-.harga {
-    font-weight: bold;
-    color: #198754;
-    font-size: 16px;
-}
+    .katalog-desc {
+        font-size: 13px;
+        color: #666;
+        flex-grow: 1;
+        overflow: hidden;
+        line-height: 1.4;
+        max-height: 38px; /* seragam deskripsi */
+        margin-bottom: 8px;
+    }
 
-.btn-cart {
-    background-color: #fff;
-    color: #198754;
-    border: 2px solid #198754;
-    border-radius: 20px;
-    padding: 6px 14px;
-    font-weight: bold;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    transition: 0.3s;
-}
+    .katalog-body .text-muted {
+        font-size: 12px;
+    }
 
-.btn-cart:hover {
-    background-color: #198754;
-    color: white;
-}
+    /* FOOTER KATALOG */
+    .katalog-footer {
+        padding: 12px 16px;
+        border-top: 1px solid #f0f0f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-.btn-cart i {
-    font-size: 16px;
-}
+    .harga {
+        color: #198754;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .btn-cart {
+        font-size: 13px;
+        padding: 5px 10px;
+        border: 1px solid #198754;
+        color: #198754;
+        background: white;
+        border-radius: 20px;
+        transition: 0.2s;
+        cursor: pointer;
+    }
+
+    .btn-cart:hover {
+        background: #198754;
+        color: white;
+    }
+
+    .badge {
+        position: absolute;
+        background: #76c043;
+        color: white;
+        padding: 3px 8px;
+        font-size: 11px;
+        border-radius: 20px;
+        top: 8px;
+        right: 8px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 991px) {
+        .katalog-container { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 575px) {
+        .katalog-container { grid-template-columns: repeat(1, 1fr); }
+    }
 </style>
 
 {{-- KATALOG --}}
@@ -676,28 +709,8 @@
         </div>
     </div>
 </footer>
-
-
-
-        <!-- Copyright Start -->
-        <div class="container-fluid copyright bg-dark py-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
-                    </div>
-                    <div class="col-md-6 my-auto text-center text-md-end text-white">
-                        <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
-                        <!--/*** If youd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
-                        <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
-                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a> Distributed By <a class="border-bottom" href="https://themewagon.com">ThemeWagon</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Copyright End -->
-
-
+        <!-- Footer End -->
+        
 
         <!-- Back to Top -->
         <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
