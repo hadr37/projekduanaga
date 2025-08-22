@@ -16,6 +16,7 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
     <style>
         .container-fluid.fixed-top {
@@ -25,7 +26,7 @@
         background: var(--bs-primary, #0d6efd) !important; /* fallback biru */
     }
         body { 
-            padding-top: 90px; 
+            padding-top: 140px; 
             font-family: 'Open Sans', sans-serif; 
         }
         .produk-container {

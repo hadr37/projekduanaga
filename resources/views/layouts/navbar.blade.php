@@ -35,7 +35,8 @@
             </button>
 
             <!-- Navbar Content -->
-            <div class="collapse navbar-collapse bg-white mt-2 mt-xl-0 py-3 py-xl-0 px-3 px-xl-0 rounded shadow-sm shadow-xl-none" id="navbarCollapse">
+            <div class="collapse navbar-collapse mt-2 mt-xl-0 py-3 py-xl-0 px-3 px-xl-0" id="navbarCollapse">
+
                 
                 <!-- Menu Tengah -->
                 <div class="navbar-nav mx-auto text-center">
@@ -97,9 +98,12 @@
     #navbarCollapse {
         background: #fff !important;
         text-align: center;
+        box-shadow: none !important;  
+        border-radius: 0 !important;  
     }
     #navbarCollapse .nav-link {
         color: #000 !important;
     }
 }
+
 </style>

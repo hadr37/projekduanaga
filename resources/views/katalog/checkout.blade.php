@@ -14,61 +14,41 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
     <style>
         .container-fluid.fixed-top {
-        border-radius: 0 !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        background: var(--bs-primary, #0d6efd) !important; /* fallback biru */
-    }
+            border-radius: 0 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            background: var(--bs-primary, #0d6efd) !important;
+        }
         body { 
             padding-top: 120px; 
             background: #f5f6fa;
             font-family: 'Open Sans', sans-serif;
         }
-
-        h2 {
-            font-weight: 700;
-            margin-bottom: 30px;
-        }
-
+        h2 { font-weight: 700; margin-bottom: 30px; }
         .card {
             border: none;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
-
         .card-header {
-            background-color: #A4DE02 !important; /* hijau stabilo */
+            background-color: #A4DE02 !important;
             color: #1a1a1a !important;
             font-weight: 600;
             font-size: 1.1rem;
         }
-
-        table {
-            font-size: 0.95rem;
-        }
-
-        .table thead th {
-            border-bottom: 2px solid #dee2e6;
-        }
-
-        .table tfoot td {
-            font-weight: 600;
-            font-size: 1rem;
-        }
-
-        .form-label {
-            font-weight: 600;
-        }
-
+        table { font-size: 0.95rem; }
+        .table thead th { border-bottom: 2px solid #dee2e6; }
+        .table tfoot td { font-weight: 600; font-size: 1rem; }
+        .form-label { font-weight: 600; }
         .form-control, .form-select {
             border-radius: 8px;
             padding: 0.5rem 0.75rem;
             font-size: 0.95rem;
         }
-
         .btn-success {
             background-color: #A4DE02;
             border-color: #A4DE02;
@@ -76,16 +56,11 @@
             font-size: 1rem;
             transition: all 0.3s ease;
         }
-
         .btn-success:hover {
             background-color: #8cc102;
             border-color: #8cc102;
         }
-
-        /* Responsive adjustments */
-        @media (max-width: 992px) {
-            body { padding-top: 80px; }
-        }
+        @media (max-width: 992px) { body { padding-top: 80px; } }
     </style>
 </head>
 <body>
@@ -96,7 +71,7 @@
     <h2>Halaman Checkout</h2>
 
     <div class="row g-4">
-        <!-- Kiri: Ringkasan Pesanan & Alamat -->
+        <!-- Kiri: Ringkasan Pesanan + Alamat -->
         <div class="col-lg-8">
             <!-- Ringkasan Pesanan -->
             <div class="card mb-4">
@@ -112,34 +87,26 @@
                             </tr>
                         </thead>
                         <tbody>
-    @php $grandTotal = $total; @endphp
-    @foreach($keranjang as $item)
-        @php
-            $subtotal = $item->product->harga * $item->jumlah;
-        @endphp
-        <tr>
-            <td>
-                <div class="d-flex align-items-center">
-                    <img src="{{ asset('storage/' . $item->product->gambar) }}" 
-                         alt="{{ $item->product->nama_barang }}" 
-                         class="me-2" 
-                         style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
-                    <span>{{ $item->product->nama_barang }}</span>
-                </div>
-            </td>
-            <td>{{ $item->jumlah }}</td>
-            <td>Rp {{ number_format($item->product->harga,0,',','.') }}</td>
-            <td>Rp {{ number_format($subtotal,0,',','.') }}</td>
-        </tr>
-    @endforeach
-</tbody>
-<tfoot>
-    <tr>
-        <td colspan="3" class="text-end">Total</td>
-        <td>Rp {{ number_format($grandTotal,0,',','.') }}</td>
-    </tr>
-</tfoot>
-
+                            @php $grandTotal = $total; @endphp
+                            @foreach($keranjang as $item)
+                                @php $subtotal = $item->product->harga * $item->jumlah; @endphp
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="{{ asset('storage/' . $item->product->gambar) }}" 
+                                                 alt="{{ $item->product->nama_barang }}" 
+                                                 class="me-2" 
+                                                 style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
+                                            <span>{{ $item->product->nama_barang }}</span>
+                                        </div>
+                                    </td>
+                                    <td>{{ $item->jumlah }}</td>
+                                    <td>Rp {{ number_format($item->product->harga,0,',','.') }}</td>
+                                    <td>Rp {{ number_format($subtotal,0,',','.') }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
                             <tr>
                                 <td colspan="3" class="text-end">Total</td>
                                 <td>Rp {{ number_format($grandTotal,0,',','.') }}</td>
@@ -157,6 +124,9 @@
                         <p class="mb-1"><strong>{{ $alamat->namapenerima }}</strong></p>
                         <p class="mb-1">{{ $alamat->alamat }}</p>
                         <p class="mb-0">No. Telepon: {{ $alamat->no_telepon }}</p>
+                        <a href="{{ route('profile.index') }}" class="btn btn-outline-primary btn-sm mt-3">
+                            <i class="fas fa-edit me-1"></i> Ganti Alamat
+                        </a>
                     @else
                         <p class="text-muted mb-0">Belum ada alamat default.  
                             <a href="{{ route('profile.index') }}">Tambahkan di profil</a>
