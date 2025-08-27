@@ -15,91 +15,45 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-<script>
-    //checkout.blade.js
-document.getElementById('jenis_pembayaran').addEventListener('change', function () {
-    let jenis = this.value;
-    let labelNo = document.getElementById('label_no');
-    let noRek = document.getElementById('no_rekening');
-    let bankSelect = document.querySelector('select[name="bank"]');
 
-    // Reset default
-    bankSelect.required = false;
-    bankSelect.closest('.mb-3').style.display = 'none'; // sembunyikan jika tidak wajib
-
-    if(jenis === 'virtual_account') {
-        labelNo.textContent = 'Nomor Virtual Account';
-        noRek.value = 'VA' + Math.floor(100000000 + Math.random() * 900000000);
-        noRek.readOnly = true;
-    } else if(jenis === 'debit' || jenis === 'visa') {
-        labelNo.textContent = 'Nomor Kartu';
-        noRek.value = '';
-        noRek.readOnly = false;
-    } else if(jenis === 'bank') {
-        labelNo.textContent = 'Nomor Rekening';
-        noRek.value = '';
-        noRek.readOnly = false;
-
-        // bank wajib kalau pilih "Bank"
-        bankSelect.required = true;
-        bankSelect.closest('.mb-3').style.display = 'block'; 
-    } else {
-        labelNo.textContent = 'Nomor Kartu / Rekening';
-        noRek.value = '';
-        noRek.readOnly = false;
-    }
-});
-
-// Saat pertama kali load halaman, cek kondisi awal
-window.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('jenis_pembayaran').dispatchEvent(new Event('change'));
-});
-    </script>
-
-
-<style>
-
-    .container-fluid.fixed-top {
-            border-radius: 0 !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            background: var(--bs-primary, #0d6efd) !important; /* fallback biru */
+    <style>
+        /* ================= GLOBAL ================= */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: #f5f6fa;
+            padding-top: 120px; /* default untuk desktop */
+        }
+        @media (max-width: 992px) {
+            body { padding-top: 80px; } /* lebih rendah untuk mobile */
         }
 
-        body { 
-            padding-top: 20px; 
-            background: #fafafa;
-        }
-
-/* Biar mobile navbar tidak transparan */
-.content-wrapper {
-    margin-top: 120px; /* Sesuaikan dengan tinggi navbar */
-}
-@media (max-width: 1199px) {
-    #navbarCollapse {
-        background: #fff !important;
-        text-align: center;
-        box-shadow: none !important;  
-        border-radius: 0 !important;  
-    }
-    #navbarCollapse .nav-link {
-        color: #000 !important;
-    }
-}
-/* checkout blade */
-
-    .container-fluid.fixed-top {
+        .container-fluid.fixed-top {
             border-radius: 0 !important;
             padding: 0 !important;
             margin: 0 !important;
             background: var(--bs-primary, #0d6efd) !important;
         }
-        body { 
-            padding-top: 120px; 
-            background: #f5f6fa;
-            font-family: 'Open Sans', sans-serif;
+
+        .content-wrapper {
+            margin-top: 120px;
         }
+
+        /* ================= NAVBAR ================= */
+        @media (max-width: 1199px) {
+            #navbarCollapse {
+                background: #fff !important;
+                text-align: center;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+            #navbarCollapse .nav-link {
+                color: #000 !important;
+            }
+        }
+
+        /* ================= CHECKOUT ================= */
         h2 { font-weight: 700; margin-bottom: 30px; }
+
         .card {
             border: none;
             border-radius: 12px;
@@ -131,29 +85,23 @@ window.addEventListener('DOMContentLoaded', function () {
             background-color: #8cc102;
             border-color: #8cc102;
         }
-        @media (max-width: 992px) { body { padding-top: 80px; } }
 
-
-        /* contact css */
-         .hero-kontak {
+        /* ================= KONTAK ================= */
+        .hero-kontak {
             background: url('{{ asset('assets/img/kontak.png') }}') no-repeat center center;
             background-size: cover;
-            height: 400px; /* bisa diperbesar sesuai keinginan, misal 500px */
+            height: 400px;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-
-        /* Overlay gelap biar teks jelas */
         .hero-kontak::before {
             content: "";
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
+            inset: 0;
             background: rgba(0, 0, 0, 0.4);
         }
-
-        /* Teks di dalam gambar */
         .hero-kontak h1 {
             position: relative;
             color: #fff;
@@ -168,136 +116,102 @@ window.addEventListener('DOMContentLoaded', function () {
             z-index: 1;
         }
 
-
-        /* shop */
-        /* GRID */
-    .katalog-container {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-        padding: 20px;
-        align-items: stretch; /* samakan tinggi */
-    }
-
-    /* CARD */
-    .katalog-card {
-        border: 1px solid #eee;
-        border-radius: 12px;
-        background: #fff;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        transition: 0.2s;
-        height: 100%;
-        overflow: hidden;
-    }
-
-    .katalog-card:hover {
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        transform: translateY(-3px);
-    }
-
-    /* GAMBAR */
-    .katalog-card img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        background-color: #f9f9f9;
-    }
-
-    /* BODY */
-    .katalog-body {
-        flex: 1;
-        padding: 16px 20px;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .katalog-title {
-        font-size: 18px;
-        font-weight: 600;
-        margin-bottom: 8px;
-        min-height: 40px; /* seragam judul */
-    }
-
-    .katalog-desc {
-        font-size: 13px;
-        color: #666;
-        flex-grow: 1;
-        overflow: hidden;
-        line-height: 1.4;
-        max-height: 38px; /* seragam deskripsi */
-        margin-bottom: 8px;
-    }
-
-    .katalog-body .text-muted {
-        font-size: 12px;
-    }
-
-    /* FOOTER */
-    .katalog-footer {
-        padding: 12px 16px;
-        border-top: 1px solid #f0f0f0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .harga {
-        color: #198754;
-        font-weight: bold;
-        font-size: 14px;
-    }
-
-    .btn-cart {
-        font-size: 13px;
-        padding: 5px 10px;
-        border: 1px solid #198754;
-        color: #198754;
-        background: white;
-        border-radius: 20px;
-        transition: 0.2s;
-        cursor: pointer;
-    }
-
-    .btn-cart:hover {
-        background: #198754;
-        color: white;
-    }
-
-    .badge {
-        position: absolute;
-        background: #76c043;
-        color: white;
-        padding: 3px 8px;
-        font-size: 11px;
-        border-radius: 20px;
-        top: 8px;
-        right: 8px;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 991px) {
-        .katalog-container { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    @media (max-width: 575px) {
-        .katalog-container { grid-template-columns: repeat(1, 1fr); }
-    }
-
-    /* keranjang */
-        .container {
-            padding-top: 150px; /* Sesuaikan jika navbar lebih tinggi */
-            background: #f5f6fa;
-            min-height: 100vh;
+        /* ================= SHOP / KATALOG ================= */
+        .katalog-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+            align-items: stretch;
         }
-        h2 {
-            font-weight: 700;
-            margin-bottom: 30px;
+        .katalog-card {
+            border: 1px solid #eee;
+            border-radius: 12px;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: 0.2s;
+            height: 100%;
+            overflow: hidden;
         }
-        .keranjang-table th, .keranjang-table td {
-            vertical-align: middle;
+        .katalog-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
         }
+        .katalog-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #f9f9f9;
+        }
+        .katalog-body {
+            flex: 1;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .katalog-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            min-height: 40px;
+        }
+        .katalog-desc {
+            font-size: 13px;
+            color: #666;
+            flex-grow: 1;
+            line-height: 1.4;
+            max-height: 38px;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+        .katalog-body .text-muted { font-size: 12px; }
+        .katalog-footer {
+            padding: 12px 16px;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .harga {
+            color: #198754;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .btn-cart {
+            font-size: 13px;
+            padding: 5px 10px;
+            border: 1px solid #198754;
+            color: #198754;
+            background: #fff;
+            border-radius: 20px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .btn-cart:hover {
+            background: #198754;
+            color: #fff;
+        }
+        .badge {
+            position: absolute;
+            background: #76c043;
+            color: #fff;
+            padding: 3px 8px;
+            font-size: 11px;
+            border-radius: 20px;
+            top: 8px;
+            right: 8px;
+        }
+        @media (max-width: 991px) {
+            .katalog-container { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 575px) {
+            .katalog-container { grid-template-columns: 1fr; }
+        }
+
+        /* ================= KERANJANG ================= */
+        .keranjang-table th, .keranjang-table td { vertical-align: middle; }
         .keranjang-table th {
             background-color: #A4DE02 !important;
             color: #1a1a1a !important;
@@ -309,40 +223,9 @@ window.addEventListener('DOMContentLoaded', function () {
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
-        .keranjang-footer h5 {
-            font-weight: 600;
-        }
-        .btn-success {
-            background-color: #A4DE02;
-            border-color: #A4DE02;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-        .btn-success:hover {
-            background-color: #8cc102;
-            border-color: #8cc102;
-        }
-        @media (max-width: 992px) {
-            body { padding-top: 80px; }
-        }
+        .keranjang-footer h5 { font-weight: 600; }
 
-        /* katalog */
-            .btn-cart, .btn-outline-primary, .btn-outline-danger {
-            border-radius: 20px;
-        }
-        .product-image {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        /* produk deskripsi */
-        body { 
-            padding-top: 140px; 
-            font-family: 'Open Sans', sans-serif; 
-        }
+        /* ================= PRODUK DESKRIPSI ================= */
         .produk-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -371,45 +254,81 @@ window.addEventListener('DOMContentLoaded', function () {
             margin-bottom: 15px;
         }
         .btn-offer {
-            background: black;
-            color: white;
+            background: #000;
+            color: #fff;
             padding: 10px 20px;
             border-radius: 20px;
-            text-decoration: none;
             font-size: 14px;
+            text-decoration: none;
             transition: 0.2s;
             display: inline-block;
             margin-top: 15px;
         }
-        .btn-offer:hover {
-            background: #333;
-        }
-        /* Agar kategori tidak terpotong */
+        .btn-offer:hover { background: #333; }
         .produk-kategori {
             font-size: 14px;
             color: #888;
-            white-space: normal !important;
-            word-break: break-word;
             line-height: 1.5;
             margin-bottom: 8px;
             display: block;
+            white-space: normal !important;
+            word-break: break-word;
         }
         @media(max-width: 768px) {
-            .produk-container {
-                grid-template-columns: 1fr;
-            }
+            .produk-container { grid-template-columns: 1fr; }
         }
-</style>
-
+    </style>
 </head>
 <body>
 
+    @include('layouts.navbar')
+    @yield('content')
 
+    <!-- ================= SCRIPT ================= -->
+    <script defer>
+        // checkout.blade.js
+        document.addEventListener("DOMContentLoaded", () => {
+            const jenisPembayaran = document.getElementById('jenis_pembayaran');
+            const labelNo = document.getElementById('label_no');
+            const noRek = document.getElementById('no_rekening');
+            const bankSelect = document.querySelector('select[name="bank"]');
 
-@include('layouts.navbar')
-@yield('content')
+            if (!jenisPembayaran) return; // amanin kalau element ga ada
 
- <script src="{{ asset('assets/js/main.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+            jenisPembayaran.addEventListener('change', function () {
+                let jenis = this.value;
+
+                // reset default
+                bankSelect.required = false;
+                bankSelect.closest('.mb-3').style.display = 'none';
+
+                if (jenis === 'virtual_account') {
+                    labelNo.textContent = 'Nomor Virtual Account';
+                    noRek.value = 'VA' + Math.floor(100000000 + Math.random() * 900000000);
+                    noRek.readOnly = true;
+                } else if (jenis === 'debit' || jenis === 'visa') {
+                    labelNo.textContent = 'Nomor Kartu';
+                    noRek.value = '';
+                    noRek.readOnly = false;
+                } else if (jenis === 'bank') {
+                    labelNo.textContent = 'Nomor Rekening';
+                    noRek.value = '';
+                    noRek.readOnly = false;
+                    bankSelect.required = true;
+                    bankSelect.closest('.mb-3').style.display = 'block';
+                } else {
+                    labelNo.textContent = 'Nomor Kartu / Rekening';
+                    noRek.value = '';
+                    noRek.readOnly = false;
+                }
+            });
+
+            // trigger awal
+            jenisPembayaran.dispatchEvent(new Event('change'));
+        });
+    </script>
+
+    <script src="{{ asset('assets/js/main.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
 </body>
 </html>

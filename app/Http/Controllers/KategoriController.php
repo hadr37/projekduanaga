@@ -98,6 +98,6 @@ class KategoriController extends Controller
 
     public function katalogKosmetik() {
     $kategoris = Kategori::all(); // ambil semua data dari tabel kategori
-    return view('katalog', compact('kategoris'));
+    return view('keranjang.katalog', compact('kategoris'));
 }
 }
