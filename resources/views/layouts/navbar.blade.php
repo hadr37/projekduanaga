@@ -43,7 +43,7 @@
                     <a href="{{ url('/') }}" class="nav-item nav-link {{ Request::is('/') ? 'text-success fw-bold' : '' }}">Home</a>
                     <a href="{{ route('katalog.shop') }}" class="nav-item nav-link {{ Request::is('katalog/shop*') ? 'text-success fw-bold' : '' }}">Shop</a>
                     @auth
-                        <a href="" class="nav-item nav-link {{ Request::is('pesanan') ? 'text-success fw-bold' : '' }}">Pesanan Saya</a>
+                        <a href="{{ route('katalog.pesanan') }}" class="nav-item nav-link {{ Request::is('pesanan') ? 'text-success fw-bold' : '' }}">Pesanan Saya</a>
                         <a href="{{ route('keranjang.katalog') }}" class="nav-item nav-link {{ Request::is('keranjang*') ? 'text-success fw-bold' : '' }}">Keranjang</a>
                     @endauth
                     <a href="{{ route('contact.index') }}" class="nav-item nav-link {{ Request::is('contact') ? 'text-success fw-bold' : '' }}">Contact</a>
@@ -92,18 +92,3 @@
 </div>
 <!-- Navbar end -->
 
-<style>
-/* Biar mobile navbar tidak transparan */
-@media (max-width: 1199px) {
-    #navbarCollapse {
-        background: #fff !important;
-        text-align: center;
-        box-shadow: none !important;  
-        border-radius: 0 !important;  
-    }
-    #navbarCollapse .nav-link {
-        color: #000 !important;
-    }
-}
-
-</style>

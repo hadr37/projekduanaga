@@ -1,48 +1,32 @@
-<!-- resources/views/katalog/keranjang.blade.php -->
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Keranjang - Skincare Dua Naga</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@extends('layouts.app')
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet">
-
-    <!-- Icon & Bootstrap -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-
-    <style>
-
-        .container-fluid.fixed-top {
+@section('content')
+<style>
+    .container-fluid.fixed-top {
         border-radius: 0 !important;
         padding: 0 !important;
         margin: 0 !important;
         background: var(--bs-primary, #0d6efd) !important; /* fallback ke biru */
     }
-        body {
-            padding-top: 150px; /* Sesuaikan jika navbar lebih tinggi */
+      body {
+            padding-top: 130px; /* Sesuaikan jika navbar lebih tinggi */
         }
-        .btn-cart, .btn-outline-primary, .btn-outline-danger {
-            border-radius: 20px;
-        }
-        .product-image {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-    </style>
-</head>
+    .product-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+    }
+    .btn-outline-primary {
+        border-color: #0d6efd;
+        color: #0d6efd;
+    }
+    .btn-outline-primary:hover {
+        background-color: #0d6efd;
+        color: #fff;
+    }</style>
 <body>
-
-    <!-- Navbar -->
-    @include('layouts.navbar')
 
     <!-- Keranjang Section -->
     <div class="container py-4">
@@ -208,8 +192,4 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
-    <script src="{{ asset('assets/js/main.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+   

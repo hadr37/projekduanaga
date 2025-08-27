@@ -1,71 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Checkout - Skincare Dua Naga</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet">
-
-    <!-- Bootstrap & Icons -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-
-    <style>
-        .container-fluid.fixed-top {
-            border-radius: 0 !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            background: var(--bs-primary, #0d6efd) !important;
-        }
-        body { 
-            padding-top: 120px; 
-            background: #f5f6fa;
-            font-family: 'Open Sans', sans-serif;
-        }
-        h2 { font-weight: 700; margin-bottom: 30px; }
-        .card {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-        .card-header {
-            background-color: #A4DE02 !important;
-            color: #1a1a1a !important;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-        table { font-size: 0.95rem; }
-        .table thead th { border-bottom: 2px solid #dee2e6; }
-        .table tfoot td { font-weight: 600; font-size: 1rem; }
-        .form-label { font-weight: 600; }
-        .form-control, .form-select {
-            border-radius: 8px;
-            padding: 0.5rem 0.75rem;
-            font-size: 0.95rem;
-        }
-        .btn-success {
-            background-color: #A4DE02;
-            border-color: #A4DE02;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-        .btn-success:hover {
-            background-color: #8cc102;
-            border-color: #8cc102;
-        }
-        @media (max-width: 992px) { body { padding-top: 80px; } }
-    </style>
-</head>
 <body>
+@extends('layouts.app')
 
-@include('layouts.navbar')
+@section('content')
 
 <div class="container py-5">
     <h2>Halaman Checkout</h2>
@@ -188,30 +125,5 @@
         </div>
     </div>
 </div>
-
-<script>
-document.getElementById('jenis_pembayaran').addEventListener('change', function () {
-    let jenis = this.value;
-    let labelNo = document.getElementById('label_no');
-    let noRek = document.getElementById('no_rekening');
-
-    if(jenis === 'virtual_account') {
-        labelNo.textContent = 'Nomor Virtual Account';
-        noRek.value = 'VA' + Math.floor(100000000 + Math.random() * 900000000);
-        noRek.readOnly = true;
-    } else if(jenis === 'debit' || jenis === 'visa') {
-        labelNo.textContent = 'Nomor Kartu';
-        noRek.value = '';
-        noRek.readOnly = false;
-    } else {
-        labelNo.textContent = 'Nomor Kartu / Rekening';
-        noRek.value = '';
-        noRek.readOnly = false;
-    }
-});
-</script>
-
-<script src="{{ asset('assets/js/main.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

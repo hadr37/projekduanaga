@@ -4,6 +4,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\PesananController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ContactController;
@@ -118,7 +119,18 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/{id}/set-default', [ProfileController::class, 'setDefault']) ->name('profile.setDefault');
 });
 
-Route::get('/katalog/checkout', [KeranjangController::class, 'checkout'])->name('katalog.checkout');
-Route::get('/checkout', [CheckoutController::class, 'show'])->name('katalog.checkout');
-Route::post('/checkout/proses', [CheckoutController::class, 'proses'])->name('katalog.checkout.proses');
+// Checkout
+Route::middleware(['auth'])->group(function () {
+    Route::get('/checkout', [PesananController::class, 'checkout'])->name('katalog.checkout');
+    Route::post('/checkout/proses', [PesananController::class, 'store'])->name('katalog.checkout.proses');
 
+    // Pesanan User
+    Route::get('/pesanan', [PesananController::class, 'index'])->name('katalog.pesanan');
+    Route::post('/pesanan/{id}/cancel', [PesananController::class, 'cancel'])->name('pesanan.cancel');
+});
+
+// ROUTE UNTUK ADMIN
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/pesanan', [PesananController::class, 'adminIndex'])->name('admin.pesanan.index');
+    Route::post('/admin/pesanan/{id}/status', [PesananController::class, 'updateStatus'])->name('admin.pesanan.updateStatus');
+});

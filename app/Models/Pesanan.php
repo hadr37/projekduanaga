@@ -1,30 +1,30 @@
 <?php
+
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Pesanan extends Model
 {
-    use HasFactory;
+    protected $table = 'pesanan';
 
     protected $fillable = [
         'user_id',
         'total',
         'jenis_pembayaran',
         'bank',
+        'nama_rekening',
         'no_rekening',
-        'pesan',
-        'alamat',
+        'status',
     ];
-
-    public function details()
-    {
-        return $this->hasMany(PesananDetail::class);
-    }
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function details()
+    {
+        return $this->hasMany(PesananDetail::class);
     }
 }

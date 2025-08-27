@@ -9,21 +9,21 @@ class PesananDetail extends Model
 {
     use HasFactory;
 
+    protected $table = 'pesanan_detail';
     protected $fillable = [
         'pesanan_id',
-        'barang_id',
+        'product_id',
         'jumlah',
         'harga',
     ];
 
     public function pesanan()
     {
-        return $this->belongsTo(Pesanan::class);
+        return $this->belongsTo(Pesanan::class, 'pesanan_id');
     }
 
-    public function barang()
+    public function product()
     {
-        return $this->belongsTo(Barang::class);
+        return $this->belongsTo(Barang::class, 'product_id');
     }
 }
-

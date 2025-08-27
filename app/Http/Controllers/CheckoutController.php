@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Card;
 use App\Models\Pesanan;
 use App\Models\PesananDetail;
@@ -12,65 +13,50 @@ use App\Models\AlamatUser;
 class CheckoutController extends Controller
 {
     // Halaman checkout
-    public function show()
-    {
-        $keranjang = Card::with('product')
-            ->where('user_id', Auth::id())
-            ->get();
+public function show()
+{  
+    $keranjang = Card::with('product')
+        ->where('user_id', Auth::id())
+        ->get();
 
-        $total = 0;
-        foreach ($keranjang as $item) {
-            $total += $item->product->harga * $item->jumlah;
-        }
+    $total = $keranjang->sum(fn($item) => $item->product->harga * $item->jumlah);
 
-        $alamat = AlamatUser::where('user_id', Auth::id())
-            ->where('is_default', 1)
-            ->first();
+    // Ambil alamat default dari tabel alamat_users
+    $alamat = AlamatUser::where('user_id', Auth::id())
+        ->where('is_default', 1)
+        ->first();
 
-        return view('katalog.checkout', compact('keranjang', 'total', 'alamat'));
+    return view('katalog.checkout', compact('keranjang', 'total', 'alamat'));
+}
+
+public function checkout()
+{ 
+    $keranjang = Card::with('product')
+        ->where('user_id', Auth::id())
+        ->get();
+
+    if ($keranjang->isEmpty()) {
+        return redirect()->route('katalog.shop')->with('error', 'Keranjang masih kosong.');
     }
 
-    // Proses checkout
-    public function proses(Request $request)
-    {
-        $request->validate([
-            'jenis_pembayaran' => 'required',
-            'bank' => 'required',
-        ]);
+    $total = $keranjang->sum(fn($c) => $c->jumlah * $c->product->harga);
 
-        $keranjang = Card::with('product')
-            ->where('user_id', Auth::id())
-            ->get();
+    // Ambil alamat default user
+    $alamat = \App\Models\AlamatUser::where('user_id', Auth::id())
+        ->where('is_default', 1)
+        ->first();
 
-        if ($keranjang->isEmpty()) {
-            return redirect()->route('katalog.shop')->with('error', 'Keranjang kosong!');
-        }
+    return view('katalog.checkout', compact('keranjang', 'total', 'alamat'));
+}
 
-        $pesanan = Pesanan::create([
-            'user_id' => Auth::id(),
-            'total' => $keranjang->sum(fn($item) => $item->product->harga * $item->jumlah),
-            'jenis_pembayaran' => $request->jenis_pembayaran,
-            'bank' => $request->bank,
-            'no_rekening' => $request->no_rekening ?? $request->no_virtual,
-            'pesan' => $request->pesan,
-            'alamat' => $request->alamat,
-        ]);
+public function pesanan()
+{
+    $pesanan = Pesanan::with('details.barang')
+        ->where('user_id', Auth::id())
+        ->latest()
+        ->get();
+    
+    return view('katalog.pesanan', compact('pesanan'));
+}
 
-        foreach ($keranjang as $item) {
-            PesananDetail::create([
-                'pesanan_id' => $pesanan->id,
-                'barang_id' => $item->product_id,
-                'jumlah' => $item->jumlah,
-                'harga' => $item->product->harga,
-            ]);
-
-            // Kurangi stok barang
-            $item->product->decrement('stok', $item->jumlah);
-        }
-
-        // Kosongkan keranjang user
-        Card::where('user_id', Auth::id())->delete();
-
-        return redirect()->route('keranjang.katalog')->with('success', 'Pesanan berhasil dibuat!');
-    }
 }

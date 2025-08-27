@@ -1,68 +1,6 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Kontak Kami - Skincare Dua Naga</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@extends('layouts.app')
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet">
-
-    <!-- Icon & Bootstrap -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-</head>
-<body>
-
-    @include('layouts.navbar')
-
-    <style>
-        .container-fluid.fixed-top {
-        border-radius: 0 !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        background: var(--bs-primary, #0d6efd) !important; /* fallback ke biru */
-    }
-        body {
-            padding-top: 130px; /* Sesuaikan jika navbar lebih tinggi */
-        }
-        /* Hero section dengan background gambar */
-        .hero-kontak {
-            background: url('{{ asset('assets/img/kontak.png') }}') no-repeat center center;
-            background-size: cover;
-            height: 400px; /* bisa diperbesar sesuai keinginan, misal 500px */
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Overlay gelap biar teks jelas */
-        .hero-kontak::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.4);
-        }
-
-        /* Teks di dalam gambar */
-        .hero-kontak h1 {
-            position: relative;
-            color: #fff;
-            font-size: 3rem;
-            font-weight: 700;
-            z-index: 1;
-        }
-        .hero-kontak p {
-            position: relative;
-            color: #e0e0e0;
-            font-size: 1.2rem;
-            z-index: 1;
-        }
-    </style>
-</head>
+@section('content')
 <body>
 
     <!-- Hero Section -->
@@ -191,7 +129,4 @@
         </div>
     </footer>
 
-    <script src="{{ asset('assets/js/main.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+   

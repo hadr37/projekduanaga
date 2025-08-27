@@ -1,39 +1,32 @@
-<!-- resources/views/katalog/keranjang.blade.php -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Keranjang Belanja</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Google Fonts dan Bootstrap -->
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <style>
-        body { padding-top: 90px; font-family: 'Open Sans', sans-serif; }
-        .keranjang-card {
-            background: #fff;
-            border: 1px solid #eee;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+@extends('layouts.app')
+
+@section('content')
+<style>
+    .container-fluid.fixed-top {
+        border-radius: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: var(--bs-primary, #0d6efd) !important; /* fallback ke biru */
+    }
+      body {
+            padding-top: 130px; /* Sesuaikan jika navbar lebih tinggi */
         }
-        .keranjang-table th, .keranjang-table td {
-            vertical-align: middle;
-            text-align: center;
-        }
-        .keranjang-footer {
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #ddd;
-        }
-    </style>
-</head>
+    .keranjang-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .keranjang-table th, .keranjang-table td {
+        vertical-align: middle;
+    }
+    .keranjang-footer {
+        border-top: 1px solid #ddd;
+        padding-top: 15px;
+        margin-top: 15px;
+    } </style>
 <body>
-
-@include('layouts.navbar')
-
 <div class="container">
     <h3 class="mb-4">🛒 Keranjang Belanja</h3>
 
@@ -104,6 +97,3 @@
     @endif
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>

@@ -662,53 +662,53 @@
 
 
 <!-- Footer -->
-<footer class="bg-dark text-white pt-5 mt-5 w-100">
-    <div class="container-fluid px-5">
-        <div class="row g-4">
-            <div class="col-md-4">
-                <h5 class="fw-bold">PT. DUA NAGA KOSMETINDO</h5>
-                <p><i class="bi bi-geo-alt-fill"></i> Dk. GAMBIRAN, Ds. Krajan, Kec. Gatak, Kab. Sukoharjo, Jawa Tengah, (57557)</p>
-                <p><i class="bi bi-whatsapp"></i> CS 1: 0811 2717 464 <br> CS 2: 0811 2800 278</p>
-                <p><i class="bi bi-envelope"></i> marketing@duanaga.co.id</p>
-                <div>
-                    <a href="#" class="text-white me-3"><i class="bi bi-instagram"></i></a>
-                    <a href="#" class="text-white"><i class="bi bi-facebook"></i></a>
+   <footer class="bg-dark text-white pt-5 mt-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5 class="fw-bold">PT. DUA NAGA KOSMETINDO</h5>
+                    <p><i class="bi bi-geo-alt-fill"></i> Dk. GAMBIRAN, Ds. Krajan, Kec. Gatak, Kab. Sukoharjo, Jawa Tengah, (57557)</p>
+                    <p><i class="bi bi-whatsapp"></i> CS 1: 0811 2717 464 <br> CS 2: 0811 2800 278</p>
+                    <p><i class="bi bi-envelope"></i> marketing@duanaga.co.id</p>
+                    <div>
+                        <a href="#" class="text-white me-3"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-facebook"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <h6 class="fw-bold">Tentang Kami</h6>
+                    <p class="small">PT Dua Naga Kosmetindo berdiri sejak tahun 2015, dipercaya memproduksi berbagai produk unggulan.</p>
+                </div>
+
+                <div class="col-md-2">
+                    <h6 class="fw-bold">Pabrik</h6>
+                    <ul class="list-unstyled small">
+                        <li>Pabrikan</li>
+                        <li>Tim R & D</li>
+                        <li>Quality Control</li>
+                        <li>Pameran Perdagangan</li>
+                    </ul>
+                </div>
+
+                <div class="col-md-2">
+                    <h6 class="fw-bold">Layanan Turnkey</h6>
+                    <ul class="list-unstyled small">
+                        <li>Formulasi Kustom</li>
+                        <li>Kemasan Khusus</li>
+                        <li>Layanan Desain</li>
+                        <li>Produksi</li>
+                        <li>Layanan Sertifikat</li>
+                        <li>Logistik</li>
+                    </ul>
                 </div>
             </div>
-
-            <div class="col-md-2">
-                <h6 class="fw-bold">Tentang Kami</h6>
-                <p class="small">PT Dua Naga Kosmetindo berdiri sejak tahun 2015, dipercaya memproduksi berbagai produk unggulan.</p>
-            </div>
-
-            <div class="col-md-2">
-                <h6 class="fw-bold">Pabrik</h6>
-                <ul class="list-unstyled small">
-                    <li>Pabrikan</li>
-                    <li>Tim R & D</li>
-                    <li>Quality Control</li>
-                    <li>Pameran Perdagangan</li>
-                </ul>
-            </div>
-
-            <div class="col-md-2">
-                <h6 class="fw-bold">Layanan Turnkey</h6>
-                <ul class="list-unstyled small">
-                    <li>Formulasi Kustom</li>
-                    <li>Kemasan Khusus</li>
-                    <li>Layanan Desain</li>
-                    <li>Produksi</li>
-                    <li>Layanan Sertifikat</li>
-                    <li>Logistik</li>
-                </ul>
+            <hr class="border-light">
+            <div class="text-center py-2">
+                <small>© {{ date('Y') }} Skincare Dua Naga. All Rights Reserved.</small>
             </div>
         </div>
-        <hr class="border-light">
-        <div class="text-center py-2">
-            <small>© {{ date('Y') }} Skincare Dua Naga. All Rights Reserved.</small>
-        </div>
-    </div>
-</footer>
+    </footer>
         <!-- Footer End -->
         
 
