@@ -25,12 +25,12 @@ public function show()
     $alamat = AlamatUser::where('user_id', Auth::id())
         ->where('is_default', 1)
         ->first();
-
+        
     return view('katalog.checkout', compact('keranjang', 'total', 'alamat'));
 }
 
 public function checkout()
-{ 
+{  
     $keranjang = Card::with('product')
         ->where('user_id', Auth::id())
         ->get();
@@ -38,7 +38,7 @@ public function checkout()
     if ($keranjang->isEmpty()) {
         return redirect()->route('katalog.shop')->with('error', 'Keranjang masih kosong.');
     }
-
+    
     $total = $keranjang->sum(fn($c) => $c->jumlah * $c->product->harga);
 
     // Ambil alamat default user

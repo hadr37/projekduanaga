@@ -17,7 +17,7 @@ class KeranjangController extends Controller
         $total = $keranjang->reduce(function ($carry, $item) {
             return $carry + ($item->product->harga * $item->jumlah);
         }, 0);
-
+        
         return view('keranjang.katalog', compact('keranjang', 'total'));
     }
 
@@ -86,8 +86,7 @@ class KeranjangController extends Controller
     public function checkout()
     {
         $userId = Auth::id();
-        $keranjang = Card::with('product')->where('user_id', $userId)->get();
-
+        $keranjang = Card::with('product')->where('user_id', $userId)->get();   
         if ($keranjang->isEmpty()) {
             return redirect()->route('keranjang.katalog')->with('error', 'Keranjang kosong!');
         }

@@ -95,5 +95,6 @@
     @else
         <div class="alert alert-warning">Keranjang Anda kosong.</div>
     @endif
-</div>
 
+</div>
+    @endsection

@@ -12,8 +12,7 @@ class ContactController extends Controller
     }
     
     public function store(Request $request)
-    {
-        $request->validate([
+    {       $request->validate([
             'nama' => 'required|string|max:255',
             'email' => 'required|email',
             'subjek' => 'required|string|max:255',
