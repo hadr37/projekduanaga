@@ -90,17 +90,22 @@ class ProfileController extends Controller
     }
 
     // Set alamat default (tambahan untuk tombol "Set Default")
-    public function setDefault($id)
-    {
-        $userId = Auth::id();
+public function setDefault($id)
+{
+    $userId = Auth::id();
 
-        // Reset semua alamat user jadi tidak default
-        AlamatUser::where('user_id', $userId)->update(['is_default' => false]);
+    // Reset semua alamat user jadi tidak default
+    AlamatUser::where('user_id', $userId)->update(['is_default' => false]);
 
-        // Set alamat ini jadi default
-        $alamat = AlamatUser::where('user_id', $userId)->findOrFail($id);
-        $alamat->update(['is_default' => true]);
+    // Set alamat ini jadi default
+    $alamat = AlamatUser::where('user_id', $userId)
+        ->where('id', $id)
+        ->firstOrFail();
 
-        return redirect()->route('profile.index')->with('success', 'Alamat default berhasil diubah.');
-    }
+    $alamat->update(['is_default' => true]);
+
+    return redirect()->route('profile.index')
+        ->with('success', 'Alamat default berhasil diubah.');
+}
+
 }
