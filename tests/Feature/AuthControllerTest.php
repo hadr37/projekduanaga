@@ -14,7 +14,7 @@ class AuthControllerTest extends TestCase
     #[\PHPUnit\Framework\Attributes\Test]
     public function it_shows_login_page()
     {
-        $response = $this->get(route('login'));
+        $response = $this->get (route('login'));
         $response->assertStatus(200);
         $response->assertViewIs('auth.login');
     }

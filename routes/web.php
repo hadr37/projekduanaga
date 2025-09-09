@@ -71,7 +71,7 @@ Route::get('/shop', [BarangController::class, 'shop'])->name('katalog.shop');
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'role:user'])->group(function () {
-    Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
+    
     Route::post('/keranjang/tambah/{id}', [KeranjangController::class, 'tambah'])->name('keranjang.tambah');
     Route::post('/keranjang/checkout', [KeranjangController::class, 'checkout'])->name('keranjang.checkout');
 
@@ -99,7 +99,7 @@ Route::get('/produk/{id}', [ProdukController::class, 'show'])->name('produk.show
 Route::resource('barang', BarangController::class);
 Route::resource('kategori', KategoriController::class);
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::resource('users', UserController::class);
+Route::resource('users', UserController::class);
 });
 Route::get('/admin/dashboard', [BarangController::class, 'dashboard'])->name('admin.dashboard');
 Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.katalog');

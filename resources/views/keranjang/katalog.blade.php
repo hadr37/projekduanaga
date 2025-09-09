@@ -26,7 +26,6 @@
         background-color: #0d6efd;
         color: #fff;
     }</style>
-<body>
 
     <!-- Keranjang Section -->
     <div class="container py-4">
