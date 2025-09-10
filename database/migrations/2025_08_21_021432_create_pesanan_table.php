@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('bank')->nullable();
             $table->string('nama_rekening')->nullable();
             $table->string('no_rekening')->nullable();
-            $table->enum('status', ['pending', 'dibayar', 'dikirim', 'selesai', 'batal'])
-                  ->default('pending');
+            $table->enum('status', ['pemrosesan', 'dikirim', 'diterima', 'dibatalkan', 'refund'])
+            ->default('pemrosesan');
+
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

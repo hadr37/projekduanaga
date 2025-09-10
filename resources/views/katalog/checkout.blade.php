@@ -1,5 +1,4 @@
 
-<body>
 @extends('layouts.app')
 
 @section('content')
@@ -125,5 +124,3 @@
         </div>
     </div>
 </div>
-</body>
-</html>
