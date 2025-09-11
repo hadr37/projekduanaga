@@ -1,16 +1,15 @@
 <?php
 
-use App\Http\Controllers\BarangController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\KeranjangController;
-use App\Http\Controllers\KategoriController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +38,7 @@ Route::post('/register/admin', [AuthController::class, 'registerAdmin']);
 
 /*
 |--------------------------------------------------------------------------
-| Admin Routes
+| Admin Routes (Versi 1)
 |--------------------------------------------------------------------------
 */
 Route::prefix('admin')->middleware(['auth'])->group(function () {
@@ -67,7 +66,7 @@ Route::get('/shop', [BarangController::class, 'shop'])->name('katalog.shop');
 
 /*
 |--------------------------------------------------------------------------
-| Keranjang & Checkout (User)
+| Keranjang & Checkout (User - Versi 1)
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'role:user'])->group(function () {
@@ -80,6 +79,11 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     })->name('user.katalog');
 });
 
+/*
+|--------------------------------------------------------------------------
+| Admin Routes (Versi 2)
+|--------------------------------------------------------------------------
+*/
 Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.dashboard'); // resources/views/admin/dashboard.blade.php
@@ -94,20 +98,60 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function () 
     // CRUD Kategori
     Route::resource('kategori', KategoriController::class);
 });
+
+/*
+|--------------------------------------------------------------------------
+| Produk
+|--------------------------------------------------------------------------
+*/
 Route::get('/produk/{id}', [ProdukController::class, 'show'])->name('produk.show');
+
+/*
+|--------------------------------------------------------------------------
+| Barang & Kategori (Versi resource di luar group)
+|--------------------------------------------------------------------------
+*/
 Route::resource('barang', BarangController::class);
 Route::resource('kategori', KategoriController::class);
+
+/*
+|--------------------------------------------------------------------------
+| Admin Routes (Versi 3 - hanya Users)
+|--------------------------------------------------------------------------
+*/
 Route::prefix('admin')->name('admin.')->group(function () {
-Route::resource('users', UserController::class);
+    Route::resource('users', UserController::class);
 });
+
+/*
+|--------------------------------------------------------------------------
+| Admin Dashboard (Versi 4)
+|--------------------------------------------------------------------------
+*/
 Route::get('/admin/dashboard', [BarangController::class, 'dashboard'])->name('admin.dashboard');
+
+/*
+|--------------------------------------------------------------------------
+| Keranjang (Versi 2)
+|--------------------------------------------------------------------------
+*/
 Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.katalog');
 Route::post('/keranjang/update/{id}', [KeranjangController::class, 'update'])->name('keranjang.update');
 Route::delete('/keranjang/delete/{id}', [KeranjangController::class, 'destroy'])->name('keranjang.destroy');
 Route::post('/keranjang/tambah/{id}', [KeranjangController::class, 'tambah'])->name('keranjang.tambah');
 
+/*
+|--------------------------------------------------------------------------
+| Contact
+|--------------------------------------------------------------------------
+*/
 Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
 
+/*
+|--------------------------------------------------------------------------
+| Profile
+|--------------------------------------------------------------------------
+*/
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/create', [ProfileController::class, 'create'])->name('profile.create');
@@ -115,11 +159,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/{id}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/{id}', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile/{id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::post('/profile/{id}/set-default', [ProfileController::class, 'setDefault']) ->name('profile.setDefault');
+    Route::post('/profile/{id}/set-default', [ProfileController::class, 'setDefault'])->name('profile.setDefault');
 });
 
-// Checkout
+/*
+|--------------------------------------------------------------------------
+| Checkout & Pesanan (User)
+|--------------------------------------------------------------------------
+*/
 Route::middleware(['auth'])->group(function () {
+    // Checkout
     Route::get('/checkout', [PesananController::class, 'checkout'])->name('katalog.checkout');
     Route::post('/checkout/proses', [PesananController::class, 'store'])->name('katalog.checkout.proses');
 
@@ -128,7 +177,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/pesanan/{id}/cancel', [PesananController::class, 'cancel'])->name('pesanan.cancel');
 });
 
-// ROUTE UNTUK ADMIN
+/*
+|--------------------------------------------------------------------------
+| Pesanan (Admin)
+|--------------------------------------------------------------------------
+*/
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/pesanan', [PesananController::class, 'adminIndex'])->name('admin.pesanan.index');
     Route::post('/admin/pesanan/{id}/status', [PesananController::class, 'updateStatus'])->name('admin.pesanan.updateStatus');
