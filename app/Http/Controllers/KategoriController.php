@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Storage;
 
 class KategoriController extends Controller
 {
-    // Tampilkan daftar kategori dengan fitur pencarian
     public function index(Request $request)
     {
         $query = Kategori::query();
@@ -22,13 +21,11 @@ class KategoriController extends Controller
         return view('admin.kategori.index', compact('kategoris'));
     }
 
-    // Tampilkan form tambah kategori
     public function create()
     {
         return view('admin.kategori.create');
     }
 
-    // Simpan kategori baru
     public function store(Request $request)
     {
         $request->validate([
@@ -39,10 +36,8 @@ class KategoriController extends Controller
 
         $data = $request->only(['nama_kategori', 'deskripsi']);
 
-        // Upload gambar jika ada
         if ($request->hasFile('gambar')) {
-            $path = $request->file('gambar')->store('kategori', 'public');
-            $data['gambar'] = $path;
+            $data['gambar'] = $request->file('gambar')->store('kategori', 'public');
         }
 
         Kategori::create($data);
@@ -50,13 +45,11 @@ class KategoriController extends Controller
         return redirect()->route('admin.kategori.index')->with('success', 'Kategori berhasil ditambahkan');
     }
 
-    // Tampilkan form edit kategori
     public function edit(Kategori $kategori)
     {
         return view('admin.kategori.edit', compact('kategori'));
     }
 
-    // Update data kategori
     public function update(Request $request, Kategori $kategori)
     {
         $request->validate([
@@ -67,15 +60,11 @@ class KategoriController extends Controller
 
         $data = $request->only(['nama_kategori', 'deskripsi']);
 
-        // Upload gambar baru jika ada
         if ($request->hasFile('gambar')) {
-            // Hapus gambar lama
             if ($kategori->gambar && Storage::disk('public')->exists($kategori->gambar)) {
                 Storage::disk('public')->delete($kategori->gambar);
             }
-
-            $path = $request->file('gambar')->store('kategori', 'public');
-            $data['gambar'] = $path;
+            $data['gambar'] = $request->file('gambar')->store('kategori', 'public');
         }
 
         $kategori->update($data);
@@ -83,10 +72,8 @@ class KategoriController extends Controller
         return redirect()->route('admin.kategori.index')->with('success', 'Kategori berhasil diperbarui');
     }
 
-    // Hapus kategori
     public function destroy(Kategori $kategori)
     {
-        // Hapus gambar jika ada
         if ($kategori->gambar && Storage::disk('public')->exists($kategori->gambar)) {
             Storage::disk('public')->delete($kategori->gambar);
         }
@@ -96,8 +83,9 @@ class KategoriController extends Controller
         return redirect()->route('admin.kategori.index')->with('success', 'Kategori berhasil dihapus');
     }
 
-    public function katalogKosmetik() {
-    $kategoris = Kategori::all(); // ambil semua data dari tabel kategori
-    return view('keranjang.katalog', compact('kategoris'));
-}
+    public function katalogKosmetik()
+    {
+        $kategoris = Kategori::where('nama_kategori', 'like', '%Kosmetik%')->get();
+        return view('keranjang.katalog', compact('kategoris'));
+    }
 }
