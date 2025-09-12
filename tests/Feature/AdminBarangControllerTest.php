@@ -11,7 +11,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
-class BarangControllerTest extends TestCase
+class AdminBarangControllerTest extends TestCase
 {
     use RefreshDatabase;
 
