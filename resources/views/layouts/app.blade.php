@@ -282,7 +282,9 @@
 <body>
 
     @include('layouts.navbar')
-    @yield('content')
+    <div id="pjax-container">
+        @yield('content')
+    </div>
 
     <!-- ================= SCRIPT ================= -->
     <script defer>

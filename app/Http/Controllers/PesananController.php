@@ -104,23 +104,21 @@ class PesananController extends Controller
      * Halaman "Pesanan Saya" untuk user.
      */
     public function index(Request $request)
-    {
-        $query = Pesanan::with('details.product')->where('user_id', Auth::id());
+{
+    $status = $request->status ?? 'all';
 
-        $status = $request->status ?? 'all';
-        if ($status !== 'all') {
-            $query->where('status', $status);
-        }
+    $query = Pesanan::with('details.product')
+        ->where('user_id', Auth::id());
 
-        $pesanan = $query->orderBy('created_at', 'desc')->get();
-
-        if ($request->ajax()) {
-            $html = view('katalog.pesanan', compact('pesanan'))->render();
-            return response()->json(['html' => $html]);
-        }
-
-        return view('katalog.pesanan', compact('pesanan'));
+    if ($status !== 'all') {
+        $query->where('status', $status);
     }
+
+    $pesanan = $query->orderBy('created_at', 'desc')->get();
+
+    return view('katalog.pesanan', compact('pesanan'));
+}
+
 
     /**
      * Batalkan pesanan.

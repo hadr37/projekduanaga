@@ -7,12 +7,20 @@
     <!-- Tabs Filter Status -->
     <ul class="nav nav-tabs mb-4" id="statusTabs">
         @php
-            $statuses = ['all'=>'Semua','pemrosesan'=>'Diproses','dikirim'=>'Dikirim','diterima'=>'Diterima','dibatalkan'=>'Dibatalkan'];
+            $statuses = [
+                'all' => 'Semua',
+                'pemrosesan' => 'Diproses',
+                'dikirim' => 'Dikirim',
+                'diterima' => 'Diterima',
+                'dibatalkan' => 'Dibatalkan'
+            ];
         @endphp
         @foreach($statuses as $key => $label)
             <li class="nav-item">
                 <a class="nav-link {{ request('status')==$key || (request('status')==null && $key=='all') ? 'active':'' }}" 
-                   href="#" data-status="{{ $key }}">{{ $label }}</a>
+                   href="{{ route('katalog.pesanan', ['status'=>$key]) }}">
+                   {{ $label }}
+                </a>
             </li>
         @endforeach
     </ul>
